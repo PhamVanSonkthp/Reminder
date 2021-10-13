@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "848218083545",
+    "project_id": "reminder-e60fd",
+    "storage_bucket": "reminder-e60fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848218083545:android:29d4a090d811f2b646eec8",
+        "android_client_info": {
+          "package_name": "com.infinity.reminder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "848218083545-1uieib0th58jvvakfrst0ok18de7ho2h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABtw_mym-HucK_2YG63HCudMdWumaqRi4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "848218083545-1uieib0th58jvvakfrst0ok18de7ho2h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

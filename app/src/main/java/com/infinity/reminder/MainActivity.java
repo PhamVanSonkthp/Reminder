@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.infinity.reminder.adapter.AdapterRCVRemind;
 import com.infinity.reminder.model.Remind;
 import com.infinity.reminder.retrofit2.APIUtils;
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // thêm data remind vào server
-        
+
+        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+
     }
 }
