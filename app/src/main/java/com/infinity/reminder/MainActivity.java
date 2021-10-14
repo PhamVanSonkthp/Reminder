@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         // thêm data remind vào server
 
-        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+        FirebaseMessaging.getInstance().subscribeToTopic("reminder");
 
     }
 }
