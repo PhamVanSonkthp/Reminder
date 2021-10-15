@@ -1,4 +1,4 @@
-package com.infinity.reminder;
+package com.infinity.reminder.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,7 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
+import com.infinity.reminder.R;
 import com.infinity.reminder.adapter.AdapterRCVRemind;
 import com.infinity.reminder.model.Remind;
 import com.infinity.reminder.retrofit2.APIUtils;
@@ -27,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Remind> reminds;
     AdapterRCVRemind adapterRCVRemind;
 
+    EditText edtTitle, edtTime;
+    Button btnAdd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         // fetch data from server
         DataClient dataClient = APIUtils.getData();
-        final Call<List<Remind>> callback = dataClient.getRemind();
+        Call<List<Remind>> callback = dataClient.getRemind();
         callback.enqueue(new Callback<List<Remind>>() {
             @Override
             public void onResponse(@NonNull Call<List<Remind>> call, @NonNull Response<List<Remind>> response) {
@@ -59,6 +66,30 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // thêm data remind vào server
-        
+
+        btnAdd = findViewById(R.id.btnAdd);
+        edtTitle = findViewById(R.id.edtTitle);
+        edtTime = findViewById(R.id.edtTime);
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = edtTitle.getText().toString();
+                String time = edtTime.getText().toString();
+
+                Call<String> callback = dataClient.addRemind(title , time);
+                callback.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+
+                    }
+                });
+            }
+        });
     }
 }
