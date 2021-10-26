@@ -1,4 +1,4 @@
-package com.infinity.reminder;
+package com.infinity.reminder.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,18 +12,18 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.infinity.reminder.R;
 
 import java.util.ArrayList;
 
-public class ChartActivity extends AppCompatActivity {
+public class Max30100SensorActivity extends AppCompatActivity {
 
-    private LineChart lineChart ;
+    private LineChart lineChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chart);
-
+        setContentView(R.layout.activity_max30100_sensor);
         addController();
     }
 
@@ -32,7 +32,7 @@ public class ChartActivity extends AppCompatActivity {
 
         lineChart.setData(generateDataLine(1 ));
         Description description = new Description();
-        description.setText("Air Sensor");
+        description.setText("Max30100 Sensor");
         lineChart.setDescription(description);
 
         lineChart.getAxisRight().setDrawLabels(true);
@@ -58,38 +58,42 @@ public class ChartActivity extends AppCompatActivity {
     private LineData generateDataLine(int cnt) {
 
         ArrayList<Entry> values1 = new ArrayList<>();
-
         for (int i = 0; i < 30; i++) {
             values1.add(new Entry(i, (float)(Math.random() * 65) + 100));
         }
-
-        LineDataSet d1 = new LineDataSet(values1, "CO");
+        LineDataSet d1 = new LineDataSet(values1, "IR");
         d1.setLineWidth(1f);
-        d1.setColor(getResources().getColor(R.color.green));
+        d1.setColor(getResources().getColor(R.color.red));
         d1.setDrawValues(false);
         d1.setDrawCircles(false);
         d1.setDrawCircleHole(false);
 
-        ArrayList<ILineDataSet> sets = new ArrayList<>();
-
-        sets.add(d1);
-
         ArrayList<Entry> values2 = new ArrayList<>();
-
-        values2.add(new Entry(0, 30));
-        for (int i = 5 ; i < values1.size() ; i+=5){
-            values2.add(new Entry(i,  (int) (Math.random() * 65) + 80));
+        for (int i = 0; i < 30; i++) {
+            values2.add(new Entry(i, (float)(Math.random() * 65) + 100));
         }
-        values2.add(new Entry(29,  60));
-
-        LineDataSet d2 = new LineDataSet(values2, "GAS");
+        LineDataSet d2 = new LineDataSet(values2, "BPM");
         d2.setLineWidth(1f);
-        d2.setColor(getResources().getColor(R.color.red));
+        d2.setColor(getResources().getColor(R.color.green));
         d2.setDrawValues(false);
         d2.setDrawCircles(false);
         d2.setDrawCircleHole(false);
 
+        ArrayList<Entry> values3 = new ArrayList<>();
+        for (int i = 0; i < 30; i++) {
+            values3.add(new Entry(i, (float)(Math.random() * 65) + 100));
+        }
+        LineDataSet d3 = new LineDataSet(values3, "SPO2");
+        d3.setLineWidth(1f);
+        d3.setColor(getResources().getColor(R.color.yellow));
+        d3.setDrawValues(false);
+        d3.setDrawCircles(false);
+        d3.setDrawCircleHole(false);
+
+        ArrayList<ILineDataSet> sets = new ArrayList<>();
+        sets.add(d1);
         sets.add(d2);
+        sets.add(d3);
 
         return new LineData(sets);
     }

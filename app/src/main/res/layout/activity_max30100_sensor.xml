@@ -4,8 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ChartActivity">
+    android:orientation="vertical">
+
+    <TextView
+        android:padding="@dimen/_10ssp"
+        android:gravity="center"
+        android:text="Cảm biến nhịp tim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/line_chart"

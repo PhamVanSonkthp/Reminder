@@ -35,8 +35,6 @@ public class LoginActivity extends AppCompatActivity {
 
         edtUserName = findViewById(R.id.edtUserName);
         edtPassword = findViewById(R.id.edtPassword);
-
-
         btnLogin = findViewById(R.id.btnLogin);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -46,13 +44,11 @@ public class LoginActivity extends AppCompatActivity {
                 String userName = edtUserName.getText().toString();
                 String password = edtPassword.getText().toString();
 
-
                 DataClient dataClient = APIUtils.getData();
                 Call<String> callback = dataClient.login(userName, password);
                 callback.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                        Log.e("AAAA" , response.body());
                         if(response.body().contains("true")){
                             // đăng nhập thành công
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();

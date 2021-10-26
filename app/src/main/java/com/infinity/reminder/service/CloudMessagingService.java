@@ -20,8 +20,8 @@ import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.infinity.reminder.MainActivity;
 import com.infinity.reminder.R;
+import com.infinity.reminder.activity.MainActivity;
 
 import java.io.IOException;
 import java.io.InputStream;

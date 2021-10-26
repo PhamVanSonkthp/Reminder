@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,13 +27,9 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-
     RecyclerView rcvRemind;
     ArrayList<Remind> reminds;
     AdapterRCVRemind adapterRCVRemind;
-
-    EditText edtTitle, edtTime;
-    Button btnAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,32 +61,17 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
 
-        // thêm data remind vào server
+    public void addSchedule(View view) {
+        startActivity(new Intent(this , AddScheduleActivity.class));
+    }
 
-        btnAdd = findViewById(R.id.btnAdd);
-        edtTitle = findViewById(R.id.edtTitle);
-        edtTime = findViewById(R.id.edtTime);
+    public void onAirSensor(View view) {
+        startActivity(new Intent(this , AirSensorActivity.class));
+    }
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String title = edtTitle.getText().toString();
-                String time = edtTime.getText().toString();
-
-                Call<String> callback = dataClient.addRemind(title , time);
-                callback.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-
-                    }
-                });
-            }
-        });
+    public void onMax30100Sensor(View view) {
+        startActivity(new Intent(this , Max30100SensorActivity.class));
     }
 }
