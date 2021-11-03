@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.infinity.reminder.R;
+import com.infinity.reminder.adapter.AdapterRCVRecord;
 import com.infinity.reminder.adapter.AdapterRCVRemind;
 import com.infinity.reminder.model.RecordChat;
 import com.infinity.reminder.model.Remind;
@@ -45,7 +46,8 @@ public class RecordActivity extends AppCompatActivity {
     private final String[] file_exts = {AUDIO_RECORDER_FILE_EXT_MP4, AUDIO_RECORDER_FILE_EXT_3GP};
     private String uriFile;
     private RecyclerView rcvRecord;
-    ArrayList<RecordChat> recordChats;
+    private ArrayList<RecordChat> recordChats;
+    private AdapterRCVRecord adapterRCVRecord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +82,9 @@ public class RecordActivity extends AppCompatActivity {
         rcvRecord.setLayoutManager(linearLayoutManager);
         rcvRecord.setNestedScrollingEnabled(false);
         recordChats = new ArrayList<>();
-        adapterRCVRemind = new AdapterRCVRemind(this, reminds);
-        rcvRecord.setAdapter(adapterRCVRemind);
+        recordChats.add(new RecordChat("abc","https://s24h.okechua.com/public/assets/aa.mp3"));
+        adapterRCVRecord = new AdapterRCVRecord(this, recordChats);
+        rcvRecord.setAdapter(adapterRCVRecord);
 
     }
 
@@ -125,30 +128,27 @@ public class RecordActivity extends AppCompatActivity {
         }catch (Exception e){
             btnRecord.setText("Giữ và nói");
         }
-//        Log.e("AAAA" , uriFile);
-//
-//        File file = new File(uriFile);
-//
-//        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), uriFile);
-//
-//        MultipartBody.Part multipartBody =MultipartBody.Part.createFormData("file",file.getName(),requestFile);
-//
-//        DataClient dataClient = APIUtils.getData();
-//        Call<ResponseBody> responseBodyCall = dataClient.addRecord(multipartBody);
-//        responseBodyCall.enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                Log.d("Success", "success "+response.code());
-//                Log.d("Success", "success "+response.message());
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                Log.d("failure", "message = " + t.getMessage());
-//                Log.d("failure", "cause = " + t.getCause());
-//            }
-//        });
+
+        File file = new File(uriFile);
+
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), uriFile);
+        MultipartBody.Part multipartBody =MultipartBody.Part.createFormData("file",file.getName(),requestFile);
+        DataClient dataClient = APIUtils.getData();
+        Call<ResponseBody> responseBodyCall = dataClient.addRecord(multipartBody);
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.d("Success", "success "+response.code());
+                Log.d("Success", "success "+response.message());
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("failure", "message = " + t.getMessage());
+                Log.d("failure", "cause = " + t.getCause());
+            }
+        });
 
     }
 }

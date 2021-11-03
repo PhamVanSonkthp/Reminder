@@ -28,6 +28,6 @@ public interface DataClient {
     Call<String> login(@Field("username") String username, @Field("password") String password);
 
     @Multipart
-    @POST("myrecord")
+    @POST("add-record")
     Call<ResponseBody> addRecord(@Part MultipartBody.Part file);
 }

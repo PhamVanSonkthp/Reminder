@@ -14,6 +14,7 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/item_rcv_record_btn_play_audio"
             android:background="@drawable/ic_baseline_play_circle_outline_24"
             android:layout_width="@dimen/_40ssp"
             android:layout_height="@dimen/_40ssp"/>
