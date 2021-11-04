@@ -5,19 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.infinity.reminder.R;
-import com.infinity.reminder.model.Remind;
 import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
                         if(response.body().contains("true")){
                             // đăng nhập thành công
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this , MainActivity.class);
+                            Intent intent = new Intent(LoginActivity.this , UserActivity.class);
                             startActivity(intent);
                         }else {
                             // đăng nhập[ thất bại

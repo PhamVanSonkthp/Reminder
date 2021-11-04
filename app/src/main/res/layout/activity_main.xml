@@ -5,76 +5,144 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.MainActivity">
+    android:padding="@dimen/_5ssp"
+    android:background="@color/primary_color"
+    tools:context=".activity.UserActivity">
+
+    <TextView
+        android:textStyle="bold"
+        android:textSize="@dimen/_15ssp"
+        android:padding="@dimen/_5ssp"
+        android:gravity="center"
+        android:text="Chức năng"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/_10ssp"
+        android:layout_marginTop="@dimen/_20ssp"
+        android:padding="@dimen/_5ssp"
         android:weightSum="2">
 
         <LinearLayout
             android:onClick="addSchedule"
+            android:background="@drawable/btn_back"
+            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center|start"
+            android:gravity="center"
+            android:layout_margin="@dimen/_5ssp"
+            android:padding="@dimen/_5ssp"
             android:layout_weight="1">
+
             <ImageView
-                android:src="@drawable/add"
-                android:layout_width="@dimen/_20ssp"
-                android:layout_height="@dimen/_20ssp"/>
+                android:src="@drawable/ic_baseline_schedule_24"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50ssp"/>
+
             <TextView
-                android:layout_marginLeft="@dimen/_5ssp"
-                android:text="Thêm nhắc nhở"
+                android:textStyle="bold"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:text="Nhắc nhở"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <LinearLayout
+            android:onClick="alert"
+            android:background="@drawable/btn_back"
+            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="end|center"
+            android:gravity="center"
+            android:layout_margin="@dimen/_5ssp"
+            android:padding="@dimen/_5ssp"
             android:layout_weight="1">
-            <TextView
-                android:layout_marginEnd="@dimen/_5ssp"
-                android:text="Cảnh báo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
 
             <ImageView
                 android:src="@drawable/alert"
-                android:layout_width="@dimen/_20ssp"
-                android:layout_height="@dimen/_20ssp"/>
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50ssp"/>
 
+            <TextView
+                android:textStyle="bold"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:text="Cảnh báo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
+
     </LinearLayout>
 
-    <TextView
-        android:onClick="onAirSensor"
-        android:padding="@dimen/_10ssp"
-        android:text="Cảm biến không khí"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_20ssp"
+        android:padding="@dimen/_5ssp"
+        android:weightSum="2">
 
-    <TextView
-        android:onClick="onMax30100Sensor"
-        android:padding="@dimen/_10ssp"
-        android:text="Cảm biến nhịp tim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:onClick="onMax30100Sensor"
+            android:background="@drawable/btn_back"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_margin="@dimen/_5ssp"
+            android:padding="@dimen/_5ssp"
+            android:layout_weight="1">
 
-    <TextView
-        android:padding="@dimen/_10ssp"
-        android:gravity="center"
-        android:text="Danh sách nhắc nhở"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            <ImageView
+                android:src="@drawable/ic_baseline_accessibility_24"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50ssp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_remind"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+            <TextView
+                android:textStyle="bold"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:text="Nhịp tim"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:onClick="onAirSensor"
+            android:background="@drawable/btn_back"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_margin="@dimen/_5ssp"
+            android:padding="@dimen/_5ssp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:src="@drawable/ic_baseline_air_24"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50ssp"/>
+
+            <TextView
+                android:textStyle="bold"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:text="Không khí"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
 </LinearLayout>
