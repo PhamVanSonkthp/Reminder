@@ -1,6 +1,7 @@
 package com.infinity.reminder.retrofit2;
 
 import com.infinity.reminder.model.Remind;
+import com.infinity.reminder.model.User;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public interface DataClient {
 
     @FormUrlEncoded
     @POST("login")
-    Call<String> login(@Field("username") String username, @Field("password") String password);
+    Call<User> login(@Field("username") String username, @Field("password") String password);
 
     @Multipart
     @POST("add-record")
