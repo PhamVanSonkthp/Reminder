@@ -46,7 +46,7 @@ public class DoctorActivity extends AppCompatActivity {
         rcvRemind.setLayoutManager(linearLayoutManager);
         rcvRemind.setNestedScrollingEnabled(false);
         users = new ArrayList<>();
-        users.add(new User("","","","123","",""));
+        users.add(new User("","",1,null));
         adapterRCVUser = new AdapterRCVUser(this, users);
         rcvRemind.setAdapter(adapterRCVUser);
     }

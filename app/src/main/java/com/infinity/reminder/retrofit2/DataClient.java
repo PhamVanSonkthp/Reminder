@@ -25,7 +25,7 @@ public interface DataClient {
     Call<String> addRemind(@Field("title") String title, @Field("time") String time);
 
     @FormUrlEncoded
-    @POST("login")
+    @POST("auth/login")
     Call<User> login(@Field("username") String username, @Field("password") String password);
 
     @Multipart
