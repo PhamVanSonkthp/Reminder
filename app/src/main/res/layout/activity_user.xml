@@ -14,7 +14,7 @@
         android:textSize="@dimen/_15ssp"
         android:padding="@dimen/_5ssp"
         android:gravity="center"
-        android:text="Chức năng"
+        android:text="Chức năng ( Bệnh nhân )"
         android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -140,9 +140,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
-
     </LinearLayout>
 
+    <LinearLayout
+        android:onClick="assistant"
+        android:layout_margin="@dimen/_10ssp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_back"
+        android:padding="@dimen/_5ssp"
+        android:orientation="vertical">
 
+        <ImageView
+            android:src="@drawable/ic_baseline_record_voice_over_24"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50ssp"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:text="Trợ lí âm thanh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
 </LinearLayout>
