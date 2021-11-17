@@ -6,8 +6,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.speech.tts.TextToSpeech;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,7 +25,7 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void addSchedule(View view) {
-        startActivity(new Intent(this , AddScheduleActivity.class));
+        startActivity(new Intent(this , ScheduleActivity.class));
     }
 
     public void onAirSensor(View view) {
@@ -80,7 +78,7 @@ public class UserActivity extends AppCompatActivity {
                     }else if(result.get(0).contains("Không khí")){
                         startActivity(new Intent(UserActivity.this , AirSensorActivity.class));
                     }else if(result.get(0).contains("Lịch") || result.get(0).contains("Nhắc nhở")){
-                        startActivity(new Intent(UserActivity.this , AddScheduleActivity.class));
+                        startActivity(new Intent(UserActivity.this , ScheduleActivity.class));
                     }
                 }
                 break;

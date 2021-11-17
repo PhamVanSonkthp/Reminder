@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.AddScheduleActivity">
+    tools:context=".activity.ScheduleActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_above="@+id/view_bottom"
@@ -27,12 +27,12 @@
             android:weightSum="2">
 
             <EditText
-                android:id="@+id/edtTitle"
+                android:id="@+id/edt_content"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/_5sdp"
                 android:layout_weight="1"
-                android:hint="title" />
+                android:hint="content" />
 
             <TextView
                 android:gravity="center"
@@ -45,7 +45,7 @@
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnAdd"
+            android:onClick="addSchedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Thêm" />

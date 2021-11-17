@@ -12,20 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.infinity.reminder.R;
-import com.infinity.reminder.activity.AddScheduleActivity;
+import com.infinity.reminder.activity.ScheduleActivity;
 import com.infinity.reminder.activity.AirSensorActivity;
 import com.infinity.reminder.activity.Max30100SensorActivity;
-import com.infinity.reminder.model.Remind;
-import com.infinity.reminder.model.User;
+import com.infinity.reminder.model.UserData;
 
 import java.util.ArrayList;
 
 public class AdapterRCVUser extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private Context context;
-    private ArrayList<User> arrItem;
+    private ArrayList<UserData> arrItem;
 
-    public AdapterRCVUser(Context context, ArrayList<User> arrItem) {
+    public AdapterRCVUser(Context context, ArrayList<UserData> arrItem) {
         this.context = context;
         this.arrItem = arrItem;
     }
@@ -40,13 +39,13 @@ public class AdapterRCVUser extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Viewhodler viewhodler = (Viewhodler) holder;
-        viewhodler.txtName.setText(arrItem.get(position).getUserData().getFullname());
-        viewhodler.txtPhone.setText(arrItem.get(position).getUserData().getPhone());
-        viewhodler.txtAge.setText(arrItem.get(position).getUserData().getAge()+"");
+        viewhodler.txtName.setText(arrItem.get(position).getFullname());
+        viewhodler.txtPhone.setText(arrItem.get(position).getPhone());
+        viewhodler.txtAge.setText(arrItem.get(position).getAge()+"");
 
         viewhodler.btnSchedule.setOnClickListener(v -> {
-            Intent intent = new Intent(context , AddScheduleActivity.class);
-            intent.putExtra("id" , arrItem.get(position).getUserData().getId());
+            Intent intent = new Intent(context , ScheduleActivity.class);
+            intent.putExtra("id" , arrItem.get(position).getId());
             context.startActivity(intent);
         });
 
@@ -56,13 +55,13 @@ public class AdapterRCVUser extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         viewhodler.btnHeart.setOnClickListener(v -> {
             Intent intent = new Intent(context , Max30100SensorActivity.class);
-            intent.putExtra("id" , arrItem.get(position).getUserData().getId());
+            intent.putExtra("id" , arrItem.get(position).getId());
             context.startActivity(intent);
         });
 
         viewhodler.btnAir.setOnClickListener(v -> {
             Intent intent = new Intent(context , AirSensorActivity.class);
-            intent.putExtra("id" , arrItem.get(position).getUserData().getId());
+            intent.putExtra("id" , arrItem.get(position).getId());
             context.startActivity(intent);
         });
     }

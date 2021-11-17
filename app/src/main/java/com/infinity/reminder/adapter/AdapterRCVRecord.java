@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.infinity.reminder.R;
 import com.infinity.reminder.helper.MusicPlayer;
 import com.infinity.reminder.model.RecordChat;
-import com.infinity.reminder.model.Remind;
 
 import java.util.ArrayList;
 

@@ -22,7 +22,11 @@
         <activity
             android:name=".activity.LoginActivity"
             android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.RecordActivity"
@@ -32,7 +36,7 @@
             android:name=".activity.Max30100SensorActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.AddScheduleActivity"
+            android:name=".activity.ScheduleActivity"
             android:exported="false" />
         <activity
             android:name=".activity.AirSensorActivity"
@@ -40,11 +44,7 @@
         <activity
             android:name=".activity.UserActivity"
             android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data

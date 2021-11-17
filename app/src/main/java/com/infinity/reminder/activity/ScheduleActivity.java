@@ -15,9 +15,10 @@ import android.widget.TextView;
 import com.infinity.reminder.R;
 import com.infinity.reminder.adapter.AdapterRCVRemind;
 import com.infinity.reminder.canvas.CustomDateTimePicker;
-import com.infinity.reminder.model.Remind;
+import com.infinity.reminder.model.DataSchedule;
 import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
+import com.infinity.reminder.storage.Storager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,15 +29,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddScheduleActivity extends AppCompatActivity {
+public class ScheduleActivity extends AppCompatActivity {
 
     EditText edtTitle;
     TextView txtTime;
-    Button btnAdd;
 
     RecyclerView rcvRemind;
-    ArrayList<Remind> reminds;
+    ArrayList<DataSchedule.DataListSchedule> dataSchedules;
     AdapterRCVRemind adapterRCVRemind;
+
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,41 +52,22 @@ public class AddScheduleActivity extends AppCompatActivity {
     private void webService() {
         // fetch data from server
         DataClient dataClient = APIUtils.getData();
-        Call<List<Remind>> callback = dataClient.getRemind();
-        callback.enqueue(new Callback<List<Remind>>() {
+        Call<DataSchedule> callback = dataClient.getSchedule("Bearer " + Storager.USER_APP.getAccess_token() , id);
+        callback.enqueue(new Callback<DataSchedule>() {
             @Override
-            public void onResponse(@NonNull Call<List<Remind>> call, @NonNull Response<List<Remind>> response) {
-                ArrayList<Remind> arrayList = (ArrayList<Remind>) response.body();
-                if(arrayList != null) reminds.addAll(arrayList);
+            public void onResponse(@NonNull Call<DataSchedule> call, @NonNull Response<DataSchedule> response) {
+                dataSchedules.addAll(response.body().getData().getData());
                 adapterRCVRemind.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Remind>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<DataSchedule> call, @NonNull Throwable t) {
 
             }
         });
     }
 
     private void addEvents() {
-        btnAdd.setOnClickListener(v -> {
-            String title = edtTitle.getText().toString();
-            String time = txtTime.getText().toString();
-            DataClient dataClient = APIUtils.getData();
-            Call<String> callback = dataClient.addRemind(title , time);
-            callback.enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-
-                }
-            });
-        });
-
         txtTime.setOnClickListener(v -> {
             CustomDateTimePicker custom;
             custom = new CustomDateTimePicker(this,
@@ -125,18 +108,34 @@ public class AddScheduleActivity extends AppCompatActivity {
     }
 
     private void addController() {
-        // thêm data remind vào server
-        btnAdd = findViewById(R.id.btnAdd);
-        edtTitle = findViewById(R.id.edtTitle);
+        id = getIntent().getIntExtra("id", 0);
+        edtTitle = findViewById(R.id.edt_content);
         txtTime = findViewById(R.id.txtTime);
 
-        // ánh xạ
         rcvRemind = findViewById(R.id.rcv_remind);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcvRemind.setLayoutManager(linearLayoutManager);
         rcvRemind.setNestedScrollingEnabled(false);
-        reminds = new ArrayList<>();
-        adapterRCVRemind = new AdapterRCVRemind(this, reminds);
+        dataSchedules = new ArrayList<>();
+        adapterRCVRemind = new AdapterRCVRemind(this, dataSchedules);
         rcvRemind.setAdapter(adapterRCVRemind);
+    }
+
+    public void addSchedule(View view) {
+        String title = edtTitle.getText().toString();
+        String time = txtTime.getText().toString();
+        DataClient dataClient = APIUtils.getData();
+        Call<String> callback = dataClient.addRemind("Bearer " + Storager.USER_APP.getAccess_token() , title, time , 1 , id);
+        callback.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+
+            }
+        });
     }
 }

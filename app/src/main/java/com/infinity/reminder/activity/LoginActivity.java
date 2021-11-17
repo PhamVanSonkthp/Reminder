@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.infinity.reminder.R;
 import com.infinity.reminder.model.User;
+import com.infinity.reminder.model.UserData;
 import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
 import com.infinity.reminder.storage.Storager;
@@ -62,10 +64,19 @@ public class LoginActivity extends AppCompatActivity {
                 Storager.USER_APP.setAccess_token(data.getString("access_token"));
                 Storager.USER_APP.setToken_type(data.getString("token_type"));
                 Storager.USER_APP.setExpires_in(data.getInt("expires_in"));
+                UserData userData = new UserData();
+                Storager.USER_APP.setUserData(userData);
+                Storager.USER_APP.getUserData().setRole(data.getInt("role"));
 
-                Intent intent = new Intent(LoginActivity.this, UserActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                if(Storager.USER_APP.getUserData().getRole() == 1){
+                    Intent intent = new Intent(LoginActivity.this, UserActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(LoginActivity.this, DoctorActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
             }
 
         } catch (IOException | JSONException ignored) {
@@ -138,9 +149,16 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
 
-                    Intent intent = new Intent(LoginActivity.this, UserActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+                    if(Storager.USER_APP.getUserData().getRole() == 1){
+                        Intent intent = new Intent(LoginActivity.this, UserActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }else{
+                        Intent intent = new Intent(LoginActivity.this, DoctorActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+
                 }else {
                     // đăng nhập[ thất bại
                     Toast.makeText(LoginActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();

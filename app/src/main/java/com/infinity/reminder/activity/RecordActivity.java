@@ -10,15 +10,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.infinity.reminder.R;
 import com.infinity.reminder.adapter.AdapterRCVRecord;
-import com.infinity.reminder.adapter.AdapterRCVRemind;
 import com.infinity.reminder.model.RecordChat;
-import com.infinity.reminder.model.Remind;
 import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
 

@@ -4,22 +4,21 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.infinity.reminder.R;
-import com.infinity.reminder.model.Remind;
+import com.infinity.reminder.model.DataSchedule;
 
 import java.util.ArrayList;
 
 public class AdapterRCVRemind extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private Context context;
-    private ArrayList<Remind> arrItem;
+    private ArrayList<DataSchedule.DataListSchedule> arrItem;
 
-    public AdapterRCVRemind(Context context, ArrayList<Remind> arrItem) {
+    public AdapterRCVRemind(Context context, ArrayList<DataSchedule.DataListSchedule> arrItem) {
         this.context = context;
         this.arrItem = arrItem;
     }
@@ -34,7 +33,7 @@ public class AdapterRCVRemind extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Viewhodler viewhodler = (Viewhodler) holder;
-        viewhodler.txtTitle.setText(arrItem.get(position).getTitle());
+        viewhodler.txtTitle.setText(arrItem.get(position).getContent());
         viewhodler.txtTime.setText(arrItem.get(position).getTime());
     }
 

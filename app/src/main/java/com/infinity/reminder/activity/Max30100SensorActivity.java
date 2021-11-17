@@ -1,5 +1,6 @@
 package com.infinity.reminder.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -13,26 +14,54 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.infinity.reminder.R;
+import com.infinity.reminder.model.DataAir;
+import com.infinity.reminder.retrofit2.APIUtils;
+import com.infinity.reminder.retrofit2.DataClient;
+import com.infinity.reminder.storage.Storager;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Max30100SensorActivity extends AppCompatActivity {
 
     private LineChart lineChart;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_max30100_sensor);
         addController();
+        getData();
+    }
+
+    private void getData() {
+        DataClient dataClient = APIUtils.getData();
+        Call<DataAir> callback = dataClient.getDataAir("Bearer " + Storager.USER_APP.getAccess_token() , id);
+        callback.enqueue(new Callback<DataAir>() {
+            @Override
+            public void onResponse(@NonNull Call<DataAir> call, @NonNull Response<DataAir> response) {
+                lineChart.setData(generateDataLine(response.body().getData().getData() ));
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<DataAir> call, @NonNull Throwable t) {
+
+            }
+        });
     }
 
     private void addController() {
+        id = getIntent().getIntExtra("id", 0);
         lineChart = findViewById(R.id.line_chart);
 
-        lineChart.setData(generateDataLine(1 ));
+        //lineChart.setData(generateDataLine(1 ));
         Description description = new Description();
-        description.setText("Max30100 Sensor");
+        description.setText("Max30100");
         lineChart.setDescription(description);
 
         lineChart.getAxisRight().setDrawLabels(true);
@@ -55,45 +84,38 @@ public class Max30100SensorActivity extends AppCompatActivity {
 
     }
 
-    private LineData generateDataLine(int cnt) {
-
+    private LineData generateDataLine(List<DataAir.DataListAir> dataListAirs) {
         ArrayList<Entry> values1 = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            values1.add(new Entry(i, (float)(Math.random() * 65) + 100));
+
+        for (int i = 0; i < dataListAirs.size(); i++) {
+            values1.add(new Entry(i, (float)(dataListAirs.get(i).getCo())));
         }
-        LineDataSet d1 = new LineDataSet(values1, "IR");
+
+        LineDataSet d1 = new LineDataSet(values1, "CO");
         d1.setLineWidth(1f);
-        d1.setColor(getResources().getColor(R.color.red));
+        d1.setColor(getResources().getColor(R.color.green));
         d1.setDrawValues(false);
         d1.setDrawCircles(false);
         d1.setDrawCircleHole(false);
 
+        ArrayList<ILineDataSet> sets = new ArrayList<>();
+
+        sets.add(d1);
+
         ArrayList<Entry> values2 = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            values2.add(new Entry(i, (float)(Math.random() * 65) + 100));
+
+        for (int i = 0 ; i < dataListAirs.size() ; i++){
+            values2.add(new Entry(i, (float)(dataListAirs.get(i).getGas())));
         }
-        LineDataSet d2 = new LineDataSet(values2, "BPM");
+
+        LineDataSet d2 = new LineDataSet(values2, "GAS");
         d2.setLineWidth(1f);
-        d2.setColor(getResources().getColor(R.color.green));
+        d2.setColor(getResources().getColor(R.color.red));
         d2.setDrawValues(false);
         d2.setDrawCircles(false);
         d2.setDrawCircleHole(false);
 
-        ArrayList<Entry> values3 = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            values3.add(new Entry(i, (float)(Math.random() * 65) + 100));
-        }
-        LineDataSet d3 = new LineDataSet(values3, "SPO2");
-        d3.setLineWidth(1f);
-        d3.setColor(getResources().getColor(R.color.yellow));
-        d3.setDrawValues(false);
-        d3.setDrawCircles(false);
-        d3.setDrawCircleHole(false);
-
-        ArrayList<ILineDataSet> sets = new ArrayList<>();
-        sets.add(d1);
         sets.add(d2);
-        sets.add(d3);
 
         return new LineData(sets);
     }
