@@ -67,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 UserData userData = new UserData();
                 Storager.USER_APP.setUserData(userData);
                 Storager.USER_APP.getUserData().setRole(data.getInt("role"));
+                Storager.USER_APP.getUserData().setId(data.getInt("id"));
 
                 if(Storager.USER_APP.getUserData().getRole() == 1){
                     Intent intent = new Intent(LoginActivity.this, UserActivity.class);

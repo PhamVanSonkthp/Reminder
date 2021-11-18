@@ -1,170 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:fillViewport="true"
     android:padding="@dimen/_5ssp"
     android:background="@color/primary_color"
     tools:context=".activity.UserActivity">
 
-    <TextView
-        android:textStyle="bold"
-        android:textSize="@dimen/_15ssp"
-        android:padding="@dimen/_5ssp"
-        android:gravity="center"
-        android:text="Chức năng ( Bệnh nhân )"
-        android:textColor="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/_20ssp"
-        android:padding="@dimen/_5ssp"
-        android:weightSum="2">
-
-        <LinearLayout
-            android:onClick="addSchedule"
-            android:background="@drawable/btn_back"
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_margin="@dimen/_5ssp"
-            android:padding="@dimen/_5ssp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:src="@drawable/ic_baseline_schedule_24"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50ssp"/>
-
-            <TextView
-                android:textStyle="bold"
-                android:textSize="@dimen/_15ssp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:text="Nhắc nhở"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:onClick="alert"
-            android:background="@drawable/btn_back"
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_margin="@dimen/_5ssp"
-            android:padding="@dimen/_5ssp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:src="@drawable/alert"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50ssp"/>
-
-            <TextView
-                android:textStyle="bold"
-                android:textSize="@dimen/_15ssp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:text="Cảnh báo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/_20ssp"
-        android:padding="@dimen/_5ssp"
-        android:weightSum="2">
-
-        <LinearLayout
-            android:onClick="onMax30100Sensor"
-            android:background="@drawable/btn_back"
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_margin="@dimen/_5ssp"
-            android:padding="@dimen/_5ssp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:src="@drawable/ic_baseline_accessibility_24"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50ssp"/>
-
-            <TextView
-                android:textStyle="bold"
-                android:textSize="@dimen/_15ssp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:text="Nhịp tim"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:onClick="onAirSensor"
-            android:background="@drawable/btn_back"
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_margin="@dimen/_5ssp"
-            android:padding="@dimen/_5ssp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:src="@drawable/ic_baseline_air_24"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50ssp"/>
-
-            <TextView
-                android:textStyle="bold"
-                android:textSize="@dimen/_15ssp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:text="Không khí"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:onClick="assistant"
-        android:layout_margin="@dimen/_10ssp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/btn_back"
-        android:padding="@dimen/_5ssp"
         android:orientation="vertical">
-
-        <ImageView
-            android:src="@drawable/ic_baseline_record_voice_over_24"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50ssp"/>
 
         <TextView
             android:textStyle="bold"
             android:textSize="@dimen/_15ssp"
-            android:textColor="@color/black"
+            android:padding="@dimen/_5ssp"
             android:gravity="center"
-            android:text="Trợ lí âm thanh"
+            android:text="Chức năng ( Bệnh nhân )"
+            android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_20ssp"
+            android:padding="@dimen/_5ssp"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:onClick="addSchedule"
+                android:background="@drawable/btn_back"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_margin="@dimen/_5ssp"
+                android:padding="@dimen/_5ssp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:src="@drawable/ic_baseline_schedule_24"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50ssp"/>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_15ssp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:text="Nhắc nhở"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:onClick="alert"
+                android:background="@drawable/btn_back"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_margin="@dimen/_5ssp"
+                android:padding="@dimen/_5ssp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:src="@drawable/alert"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50ssp"/>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_15ssp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:text="Cảnh báo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_20ssp"
+            android:padding="@dimen/_5ssp"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:onClick="onMax30100Sensor"
+                android:background="@drawable/btn_back"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_margin="@dimen/_5ssp"
+                android:padding="@dimen/_5ssp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:src="@drawable/ic_baseline_accessibility_24"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50ssp"/>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_15ssp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:text="Nhịp tim"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:onClick="onAirSensor"
+                android:background="@drawable/btn_back"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_margin="@dimen/_5ssp"
+                android:padding="@dimen/_5ssp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:src="@drawable/ic_baseline_air_24"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50ssp"/>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_15ssp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:text="Không khí"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:onClick="assistant"
+            android:layout_margin="@dimen/_10ssp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_back"
+            android:padding="@dimen/_5ssp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:src="@drawable/ic_baseline_record_voice_over_24"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50ssp"/>
+
+            <TextView
+                android:textStyle="bold"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:text="Trợ lí âm thanh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:onClick="logout"
+            android:layout_margin="@dimen/_10ssp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_back"
+            android:padding="@dimen/_5ssp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:src="@drawable/logout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50ssp"/>
+
+            <TextView
+                android:textStyle="bold"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:text="Đăng xuất"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.infinity.reminder.R;
-import com.infinity.reminder.adapter.AdapterRCVRemind;
+import com.infinity.reminder.adapter.AdapterRCVSchedule;
 import com.infinity.reminder.canvas.CustomDateTimePicker;
 import com.infinity.reminder.model.DataSchedule;
 import com.infinity.reminder.retrofit2.APIUtils;
@@ -23,7 +23,6 @@ import com.infinity.reminder.storage.Storager;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,7 +35,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
     RecyclerView rcvRemind;
     ArrayList<DataSchedule.DataListSchedule> dataSchedules;
-    AdapterRCVRemind adapterRCVRemind;
+    AdapterRCVSchedule adapterRCVSchedule;
 
     private int id;
 
@@ -56,8 +55,13 @@ public class ScheduleActivity extends AppCompatActivity {
         callback.enqueue(new Callback<DataSchedule>() {
             @Override
             public void onResponse(@NonNull Call<DataSchedule> call, @NonNull Response<DataSchedule> response) {
-                dataSchedules.addAll(response.body().getData().getData());
-                adapterRCVRemind.notifyDataSetChanged();
+                if(response.code() == 200){
+                    dataSchedules.clear();
+                    dataSchedules.addAll(response.body().getData().getData());
+                    adapterRCVSchedule.notifyDataSetChanged();
+                }else{
+                    Toast.makeText(ScheduleActivity.this, response.code() + "", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -117,8 +121,8 @@ public class ScheduleActivity extends AppCompatActivity {
         rcvRemind.setLayoutManager(linearLayoutManager);
         rcvRemind.setNestedScrollingEnabled(false);
         dataSchedules = new ArrayList<>();
-        adapterRCVRemind = new AdapterRCVRemind(this, dataSchedules);
-        rcvRemind.setAdapter(adapterRCVRemind);
+        adapterRCVSchedule = new AdapterRCVSchedule(this, dataSchedules);
+        rcvRemind.setAdapter(adapterRCVSchedule);
     }
 
     public void addSchedule(View view) {
@@ -129,7 +133,10 @@ public class ScheduleActivity extends AppCompatActivity {
         callback.enqueue(new Callback<String>() {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-
+                if(response.code() == 200){
+                    edtTitle.setText("");
+                    webService();
+                }
             }
 
             @Override

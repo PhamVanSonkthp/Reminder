@@ -15,6 +15,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.infinity.reminder.R;
 import com.infinity.reminder.model.DataAir;
+import com.infinity.reminder.model.DataMax30100;
 import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
 import com.infinity.reminder.storage.Storager;
@@ -41,15 +42,18 @@ public class Max30100SensorActivity extends AppCompatActivity {
 
     private void getData() {
         DataClient dataClient = APIUtils.getData();
-        Call<DataAir> callback = dataClient.getDataAir("Bearer " + Storager.USER_APP.getAccess_token() , id);
-        callback.enqueue(new Callback<DataAir>() {
+        Call<DataMax30100> callback = dataClient.getMax30100("Bearer " + Storager.USER_APP.getAccess_token() , id);
+        callback.enqueue(new Callback<DataMax30100>() {
             @Override
-            public void onResponse(@NonNull Call<DataAir> call, @NonNull Response<DataAir> response) {
+            public void onResponse(@NonNull Call<DataMax30100> call, @NonNull Response<DataMax30100> response) {
                 lineChart.setData(generateDataLine(response.body().getData().getData() ));
+
+                lineChart.notifyDataSetChanged();
+                lineChart.invalidate();
             }
 
             @Override
-            public void onFailure(@NonNull Call<DataAir> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<DataMax30100> call, @NonNull Throwable t) {
 
             }
         });
@@ -84,14 +88,14 @@ public class Max30100SensorActivity extends AppCompatActivity {
 
     }
 
-    private LineData generateDataLine(List<DataAir.DataListAir> dataListAirs) {
+    private LineData generateDataLine(List<DataMax30100.DataListMax30100> dataListAirs) {
         ArrayList<Entry> values1 = new ArrayList<>();
 
         for (int i = 0; i < dataListAirs.size(); i++) {
-            values1.add(new Entry(i, (float)(dataListAirs.get(i).getCo())));
+            values1.add(new Entry(i, (float)(dataListAirs.get(i).getBmp())));
         }
 
-        LineDataSet d1 = new LineDataSet(values1, "CO");
+        LineDataSet d1 = new LineDataSet(values1, "BMP");
         d1.setLineWidth(1f);
         d1.setColor(getResources().getColor(R.color.green));
         d1.setDrawValues(false);
@@ -105,10 +109,10 @@ public class Max30100SensorActivity extends AppCompatActivity {
         ArrayList<Entry> values2 = new ArrayList<>();
 
         for (int i = 0 ; i < dataListAirs.size() ; i++){
-            values2.add(new Entry(i, (float)(dataListAirs.get(i).getGas())));
+            values2.add(new Entry(i, (float)(dataListAirs.get(i).getSpo2())));
         }
 
-        LineDataSet d2 = new LineDataSet(values2, "GAS");
+        LineDataSet d2 = new LineDataSet(values2, "SPO2");
         d2.setLineWidth(1f);
         d2.setColor(getResources().getColor(R.color.red));
         d2.setDrawValues(false);
@@ -116,6 +120,21 @@ public class Max30100SensorActivity extends AppCompatActivity {
         d2.setDrawCircleHole(false);
 
         sets.add(d2);
+
+        ArrayList<Entry> values3 = new ArrayList<>();
+
+        for (int i = 0 ; i < dataListAirs.size() ; i++){
+            values3.add(new Entry(i, (float)(dataListAirs.get(i).getIr())));
+        }
+
+        LineDataSet d3 = new LineDataSet(values2, "IR");
+        d3.setLineWidth(1f);
+        d3.setColor(getResources().getColor(R.color.yellow));
+        d3.setDrawValues(false);
+        d3.setDrawCircles(false);
+        d3.setDrawCircleHole(false);
+
+        sets.add(d3);
 
         return new LineData(sets);
     }

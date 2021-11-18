@@ -2,6 +2,7 @@ package com.infinity.reminder.retrofit2;
 
 import com.infinity.reminder.model.DataAir;
 import com.infinity.reminder.model.DataListUserByManager;
+import com.infinity.reminder.model.DataMax30100;
 import com.infinity.reminder.model.DataSchedule;
 import com.infinity.reminder.model.User;
 
@@ -33,6 +34,9 @@ public interface DataClient {
 
     @GET("airdata/get-list-by-user/{id}")
     Call<DataAir> getDataAir(@Header("Authorization") String token , @Path("id") int id);
+
+    @GET("max30110/get-list-by-user/{id}")
+    Call<DataMax30100> getMax30100(@Header("Authorization") String token , @Path("id") int id);
 
     @FormUrlEncoded
     @POST("auth/login")

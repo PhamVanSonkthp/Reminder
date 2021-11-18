@@ -2,15 +2,19 @@ package com.infinity.reminder.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.infinity.reminder.R;
+import com.infinity.reminder.storage.Storager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -25,15 +29,21 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void addSchedule(View view) {
-        startActivity(new Intent(this , ScheduleActivity.class));
+        Intent intent = new Intent(this , ScheduleActivity.class);
+        intent.putExtra("id" , Storager.USER_APP.getUserData().getId());
+        startActivity(intent);
     }
 
     public void onAirSensor(View view) {
-        startActivity(new Intent(this , AirSensorActivity.class));
+        Intent intent = new Intent(this , AirSensorActivity.class);
+        intent.putExtra("id" , Storager.USER_APP.getUserData().getId());
+        startActivity(intent);
     }
 
     public void onMax30100Sensor(View view) {
-        startActivity(new Intent(this , Max30100SensorActivity.class));
+        Intent intent = new Intent(this , Max30100SensorActivity.class);
+        intent.putExtra("id" , Storager.USER_APP.getUserData().getId());
+        startActivity(intent);
     }
 
     public void alert(View view) {
@@ -85,5 +95,29 @@ public class UserActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    public void logout(View view) {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_logout);
+
+        Button btnLogout = dialog.findViewById(R.id.dialog_logout_btn_logout);
+        Button btnCancel = dialog.findViewById(R.id.dialog_logout_btn_cancel);
+
+        btnLogout.setOnClickListener(v -> {
+            File dir = getFilesDir();
+            File file = new File(dir, Storager.FILE_INTERNAL);
+            file.delete();
+
+            Intent intent = new Intent(this , LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        });
+
+        btnCancel.setOnClickListener(v -> {
+            dialog.cancel();
+        });
+
+        dialog.show();
     }
 }

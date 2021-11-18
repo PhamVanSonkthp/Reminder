@@ -49,6 +49,8 @@ public class AirSensorActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<DataAir> call, @NonNull Response<DataAir> response) {
                 lineChart.setData(generateDataLine(response.body().getData().getData() ));
+                lineChart.notifyDataSetChanged();
+                lineChart.invalidate();
             }
 
             @Override
