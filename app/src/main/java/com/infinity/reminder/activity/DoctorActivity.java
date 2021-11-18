@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.infinity.reminder.R;
 import com.infinity.reminder.adapter.AdapterRCVUser;
@@ -15,6 +17,7 @@ import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
 import com.infinity.reminder.storage.Storager;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -32,11 +35,6 @@ public class DoctorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor);
         addController();
-        addEvents();
-    }
-
-    private void addEvents() {
-
     }
 
     private void addController() {
@@ -52,9 +50,20 @@ public class DoctorActivity extends AppCompatActivity {
         callback.enqueue(new Callback<DataListUserByManager>() {
             @Override
             public void onResponse(@NonNull Call<DataListUserByManager> call, @NonNull Response<DataListUserByManager> response) {
-                users = (ArrayList<UserData>) response.body().getData();
-                adapterRCVUser = new AdapterRCVUser(DoctorActivity.this, users);
-                rcvRemind.setAdapter(adapterRCVUser);
+                if(response.code() == 200){
+                    users = (ArrayList<UserData>) response.body().getData();
+                    adapterRCVUser = new AdapterRCVUser(DoctorActivity.this, users);
+                    rcvRemind.setAdapter(adapterRCVUser);
+                }else if (response.code() == 403){
+                    File dir = getFilesDir();
+                    File file = new File(dir, Storager.FILE_INTERNAL);
+                    file.delete();
+
+                    Intent intent = new Intent(DoctorActivity.this , LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+
             }
 
             @Override
@@ -64,5 +73,15 @@ public class DoctorActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public void logout(View view) {
+        File dir = getFilesDir();
+        File file = new File(dir, Storager.FILE_INTERNAL);
+        file.delete();
+
+        Intent intent = new Intent(this , LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }

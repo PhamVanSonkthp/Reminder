@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
 import com.infinity.reminder.storage.Storager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -59,6 +61,15 @@ public class ScheduleActivity extends AppCompatActivity {
                     dataSchedules.clear();
                     dataSchedules.addAll(response.body().getData().getData());
                     adapterRCVSchedule.notifyDataSetChanged();
+                    rcvRemind.scrollToPosition( Math.max(0, dataSchedules.size() - 1));
+                }else if (response.code() == 403){
+                    File dir = getFilesDir();
+                    File file = new File(dir, Storager.FILE_INTERNAL);
+                    file.delete();
+
+                    Intent intent = new Intent(ScheduleActivity.this , LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
                 }else{
                     Toast.makeText(ScheduleActivity.this, response.code() + "", Toast.LENGTH_SHORT).show();
                 }
@@ -136,6 +147,14 @@ public class ScheduleActivity extends AppCompatActivity {
                 if(response.code() == 200){
                     edtTitle.setText("");
                     webService();
+                }else if (response.code() == 403){
+                    File dir = getFilesDir();
+                    File file = new File(dir, Storager.FILE_INTERNAL);
+                    file.delete();
+
+                    Intent intent = new Intent(ScheduleActivity.this , LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
                 }
             }
 
@@ -144,5 +163,9 @@ public class ScheduleActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void back(View view) {
+        finish();
     }
 }

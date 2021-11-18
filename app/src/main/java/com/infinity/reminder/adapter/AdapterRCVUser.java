@@ -1,22 +1,29 @@
 package com.infinity.reminder.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeWarningDialog;
+import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
 import com.infinity.reminder.R;
+import com.infinity.reminder.activity.LoginActivity;
 import com.infinity.reminder.activity.ScheduleActivity;
 import com.infinity.reminder.activity.AirSensorActivity;
 import com.infinity.reminder.activity.Max30100SensorActivity;
 import com.infinity.reminder.model.UserData;
+import com.infinity.reminder.storage.Storager;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class AdapterRCVUser extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -50,7 +57,22 @@ public class AdapterRCVUser extends RecyclerView.Adapter<RecyclerView.ViewHolder
         });
 
         viewhodler.btnAlert.setOnClickListener(v -> {
-
+            new AwesomeWarningDialog(context)
+                    .setTitle("Cảnh báo")
+                    .setMessage("Phát cảnh báo ngay tới bệnh nhân?")
+                    .setColoredCircle(R.color.dialogNoticeBackgroundColor)
+                    .setDialogIconAndColor(R.drawable.ic_notice, R.color.white)
+                    .setCancelable(true)
+                    .setButtonText("Phát ngay")
+                    .setButtonBackgroundColor(R.color.dialogNoticeBackgroundColor)
+                    .setButtonTextColor(R.color.white)
+                    .setWarningButtonClick(new Closure() {
+                        @Override
+                        public void exec() {
+                            // click
+                        }
+                    })
+                    .show();
         });
 
         viewhodler.btnHeart.setOnClickListener(v -> {

@@ -3,8 +3,10 @@ package com.infinity.reminder.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -22,6 +24,7 @@ import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
 import com.infinity.reminder.storage.Storager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,9 +51,20 @@ public class AirSensorActivity extends AppCompatActivity {
         callback.enqueue(new Callback<DataAir>() {
             @Override
             public void onResponse(@NonNull Call<DataAir> call, @NonNull Response<DataAir> response) {
-                lineChart.setData(generateDataLine(response.body().getData().getData() ));
-                lineChart.notifyDataSetChanged();
-                lineChart.invalidate();
+                if(response.code() == 200){
+                    lineChart.setData(generateDataLine(response.body().getData().getData() ));
+                    lineChart.notifyDataSetChanged();
+                    lineChart.invalidate();
+                }else if (response.code() == 403){
+                    File dir = getFilesDir();
+                    File file = new File(dir, Storager.FILE_INTERNAL);
+                    file.delete();
+
+                    Intent intent = new Intent(AirSensorActivity.this , LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+
             }
 
             @Override
@@ -123,5 +137,9 @@ public class AirSensorActivity extends AppCompatActivity {
         sets.add(d2);
 
         return new LineData(sets);
+    }
+
+    public void back(View view) {
+        finish();
     }
 }

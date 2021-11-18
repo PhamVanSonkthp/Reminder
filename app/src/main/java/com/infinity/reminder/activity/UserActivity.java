@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeWarningDialog;
+import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
 import com.infinity.reminder.R;
 import com.infinity.reminder.storage.Storager;
 
@@ -47,7 +49,22 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void alert(View view) {
-
+        new AwesomeWarningDialog(this)
+                .setTitle("Cảnh báo")
+                .setMessage("Cảnh báo tới bác sĩ và người nhà?")
+                .setColoredCircle(R.color.dialogNoticeBackgroundColor)
+                .setDialogIconAndColor(R.drawable.ic_notice, R.color.white)
+                .setCancelable(true)
+                .setButtonText("Phát ngay")
+                .setButtonBackgroundColor(R.color.dialogNoticeBackgroundColor)
+                .setButtonTextColor(R.color.white)
+                .setWarningButtonClick(new Closure() {
+                    @Override
+                    public void exec() {
+                        // click
+                    }
+                })
+                .show();
     }
 
     public void assistant(View view) {

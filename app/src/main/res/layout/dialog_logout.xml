@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/dialog_logout_txt_title"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="@dimen/_15ssp"

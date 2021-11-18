@@ -46,23 +46,28 @@ public class AdapterRCVSchedule extends RecyclerView.Adapter<RecyclerView.ViewHo
         viewhodler.txtTitle.setText(arrItem.get(position).getContent());
         viewhodler.txtTime.setText(arrItem.get(position).getTime());
 
-        DataClient dataClient = APIUtils.getData();
-        Call<DataSchedule> callback = dataClient.getSchedule("Bearer " + Storager.USER_APP.getAccess_token() , id);
-        callback.enqueue(new Callback<DataSchedule>() {
-            @Override
-            public void onResponse(@NonNull Call<DataSchedule> call, @NonNull Response<DataSchedule> response) {
-                if(response.code() == 200){
+        int pos = position;
+        viewhodler.imgDelete.setOnClickListener(v -> {
+            DataClient dataClient = APIUtils.getData();
+            Call<String> callback = dataClient.deleteSchedule("Bearer " + Storager.USER_APP.getAccess_token() , arrItem.get(position).getId());
+            callback.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                    if(response.code() == 200){
+                        arrItem.remove(pos);
+                        notifyDataSetChanged();
+                    }else{
+                        Toast.makeText(context , response.code()+"" , Toast.LENGTH_SHORT).show();
+                    }
+                }
 
-                }else{
+                @Override
+                public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
 
                 }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<DataSchedule> call, @NonNull Throwable t) {
-
-            }
+            });
         });
+
     }
 
     @Override

@@ -3,7 +3,9 @@ package com.infinity.reminder.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -20,6 +22,7 @@ import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
 import com.infinity.reminder.storage.Storager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,10 +49,19 @@ public class Max30100SensorActivity extends AppCompatActivity {
         callback.enqueue(new Callback<DataMax30100>() {
             @Override
             public void onResponse(@NonNull Call<DataMax30100> call, @NonNull Response<DataMax30100> response) {
-                lineChart.setData(generateDataLine(response.body().getData().getData() ));
+                if(response.code() == 200){
+                    lineChart.setData(generateDataLine(response.body().getData().getData() ));
+                    lineChart.notifyDataSetChanged();
+                    lineChart.invalidate();
+                }else if (response.code() == 403){
+                    File dir = getFilesDir();
+                    File file = new File(dir, Storager.FILE_INTERNAL);
+                    file.delete();
 
-                lineChart.notifyDataSetChanged();
-                lineChart.invalidate();
+                    Intent intent = new Intent(Max30100SensorActivity.this , LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
             }
 
             @Override
@@ -137,5 +149,9 @@ public class Max30100SensorActivity extends AppCompatActivity {
         sets.add(d3);
 
         return new LineData(sets);
+    }
+
+    public void back(View view) {
+        finish();
     }
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -24,6 +25,9 @@ public interface DataClient {
 
     @GET("admin/schedule/get-list-schedule-by-patient/{id}")
     Call<DataSchedule> getSchedule(@Header("Authorization") String token , @Path("id") int id);
+
+    @DELETE("admin/schedule/delete/{id}")
+    Call<String> deleteSchedule(@Header("Authorization") String token , @Path("id") int id);
 
     @FormUrlEncoded
     @POST("admin/schedule/create")

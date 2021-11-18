@@ -42,6 +42,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation "com.daimajia.swipelayout:library:1.2.0@aar"
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+    implementation 'com.github.blennerSilva:AwesomeDialog:2.0.5'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
