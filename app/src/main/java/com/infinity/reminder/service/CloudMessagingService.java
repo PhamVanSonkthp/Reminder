@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -21,6 +22,7 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.infinity.reminder.R;
+import com.infinity.reminder.activity.LoginActivity;
 import com.infinity.reminder.activity.UserActivity;
 
 import java.io.IOException;
@@ -35,7 +37,7 @@ public class CloudMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
-        Intent intent = new Intent(this, UserActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
 
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -46,10 +48,10 @@ public class CloudMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this , 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        Bitmap largeIcon = getBitmapFromUrl(remoteMessage.getData().get("image"));
+        //Bitmap largeIcon = getBitmapFromUrl(remoteMessage.getData().get("image"));
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, ADMIN_CHANNEL_ID)
                 .setSmallIcon(R.drawable.icon_logo)
-                .setLargeIcon(largeIcon)
+                //.setLargeIcon(largeIcon)
                 .setWhen(System.currentTimeMillis())
                 .setDefaults(Notification.DEFAULT_LIGHTS )
                 .setContentTitle(remoteMessage.getData().get("title"))
@@ -57,7 +59,7 @@ public class CloudMessagingService extends FirebaseMessagingService {
                 .setContentText(remoteMessage.getData().get("content"))
                 .setAutoCancel(true)
                 .setVibrate(new long[]{0, 500, 1000})
-                .setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE+ "://" +this.getPackageName()+"/"+R.raw.notifycation_information))
+                //.setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE+ "://" +this.getPackageName()+"/"+R.raw.notifycation_information))
                 .setContentIntent(pendingIntent);
 
 

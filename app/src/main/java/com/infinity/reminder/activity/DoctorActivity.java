@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.infinity.reminder.R;
 import com.infinity.reminder.adapter.AdapterRCVUser;
 import com.infinity.reminder.model.DataListUserByManager;
@@ -55,6 +56,7 @@ public class DoctorActivity extends AppCompatActivity {
                     adapterRCVUser = new AdapterRCVUser(DoctorActivity.this, users);
                     rcvRemind.setAdapter(adapterRCVUser);
                 }else if (response.code() == 403){
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic("id-" + Storager.USER_APP.getUserData().getRole());
                     File dir = getFilesDir();
                     File file = new File(dir, Storager.FILE_INTERNAL);
                     file.delete();

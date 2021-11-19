@@ -15,6 +15,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.infinity.reminder.R;
 import com.infinity.reminder.model.DataAir;
 import com.infinity.reminder.model.DataMax30100;
@@ -54,6 +55,7 @@ public class Max30100SensorActivity extends AppCompatActivity {
                     lineChart.notifyDataSetChanged();
                     lineChart.invalidate();
                 }else if (response.code() == 403){
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic("id-" + Storager.USER_APP.getUserData().getRole());
                     File dir = getFilesDir();
                     File file = new File(dir, Storager.FILE_INTERNAL);
                     file.delete();

@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.infinity.reminder.R;
 import com.infinity.reminder.model.User;
 import com.infinity.reminder.model.UserData;
@@ -149,6 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                     } catch (JSONException | IOException e) {
 
                     }
+                    FirebaseMessaging.getInstance().subscribeToTopic("id-" + Storager.USER_APP.getUserData().getId());
 
                     if(Storager.USER_APP.getUserData().getRole() == 1){
                         Intent intent = new Intent(LoginActivity.this, UserActivity.class);
@@ -168,7 +172,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-
+                cancelDialogProcessing();
             }
         });
     }

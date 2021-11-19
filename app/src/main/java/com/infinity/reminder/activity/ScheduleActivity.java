@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.infinity.reminder.R;
 import com.infinity.reminder.adapter.AdapterRCVSchedule;
 import com.infinity.reminder.canvas.CustomDateTimePicker;
@@ -63,6 +64,7 @@ public class ScheduleActivity extends AppCompatActivity {
                     adapterRCVSchedule.notifyDataSetChanged();
                     rcvRemind.scrollToPosition( Math.max(0, dataSchedules.size() - 1));
                 }else if (response.code() == 403){
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic("id-" + Storager.USER_APP.getUserData().getRole());
                     File dir = getFilesDir();
                     File file = new File(dir, Storager.FILE_INTERNAL);
                     file.delete();
@@ -148,6 +150,7 @@ public class ScheduleActivity extends AppCompatActivity {
                     edtTitle.setText("");
                     webService();
                 }else if (response.code() == 403){
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic("id-" + Storager.USER_APP.getUserData().getRole());
                     File dir = getFilesDir();
                     File file = new File(dir, Storager.FILE_INTERNAL);
                     file.delete();
