@@ -29,6 +29,9 @@ public interface DataClient {
     @DELETE("admin/schedule/delete/{id}")
     Call<String> deleteSchedule(@Header("Authorization") String token , @Path("id") int id);
 
+    @GET("alert/create-alert-emergency/{id}")
+    Call<String> addAlert(@Header("Authorization") String token , @Path("id") int id);
+
     @FormUrlEncoded
     @POST("admin/schedule/create")
     Call<String> addRemind(@Header("Authorization") String token ,@Field("content") String title, @Field("time") String time, @Field("process") int process, @Field("user_id") int user_id);

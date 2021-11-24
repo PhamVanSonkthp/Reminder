@@ -27,15 +27,6 @@
             android:src="@drawable/ic_baseline_schedule_24" />
 
         <ImageView
-            android:id="@+id/item_rcv_user_btn_alert"
-            android:layout_width="@dimen/_50ssp"
-            android:layout_height="@dimen/_50ssp"
-            android:padding="@dimen/_5ssp"
-            android:layout_margin="@dimen/_5ssp"
-            android:background="@drawable/btn_back"
-            android:src="@drawable/alert" />
-
-        <ImageView
             android:id="@+id/item_rcv_user_btn_heart"
             android:layout_width="@dimen/_50ssp"
             android:layout_height="@dimen/_50ssp"

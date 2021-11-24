@@ -56,25 +56,6 @@ public class AdapterRCVUser extends RecyclerView.Adapter<RecyclerView.ViewHolder
             context.startActivity(intent);
         });
 
-        viewhodler.btnAlert.setOnClickListener(v -> {
-            new AwesomeWarningDialog(context)
-                    .setTitle("Cảnh báo")
-                    .setMessage("Phát cảnh báo ngay tới bệnh nhân?")
-                    .setColoredCircle(R.color.dialogNoticeBackgroundColor)
-                    .setDialogIconAndColor(R.drawable.ic_notice, R.color.white)
-                    .setCancelable(true)
-                    .setButtonText("Phát ngay")
-                    .setButtonBackgroundColor(R.color.dialogNoticeBackgroundColor)
-                    .setButtonTextColor(R.color.white)
-                    .setWarningButtonClick(new Closure() {
-                        @Override
-                        public void exec() {
-                            // click
-                        }
-                    })
-                    .show();
-        });
-
         viewhodler.btnHeart.setOnClickListener(v -> {
             Intent intent = new Intent(context , Max30100SensorActivity.class);
             intent.putExtra("id" , arrItem.get(position).getId());
@@ -95,7 +76,7 @@ public class AdapterRCVUser extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     static class Viewhodler extends RecyclerView.ViewHolder {
         TextView  txtName, txtPhone, txtAge;
-        ImageView btnSchedule,btnAlert,btnHeart,btnAir;
+        ImageView btnSchedule,btnHeart,btnAir;
 
         Viewhodler(@NonNull View itemView) {
             super(itemView);
@@ -103,7 +84,6 @@ public class AdapterRCVUser extends RecyclerView.Adapter<RecyclerView.ViewHolder
             txtPhone = itemView.findViewById(R.id.item_rcv_user_txt_phone);
             txtAge = itemView.findViewById(R.id.item_rcv_user_txt_age);
             btnSchedule = itemView.findViewById(R.id.item_rcv_user_btn_schedule);
-            btnAlert = itemView.findViewById(R.id.item_rcv_user_btn_alert);
             btnHeart = itemView.findViewById(R.id.item_rcv_user_btn_heart);
             btnAir = itemView.findViewById(R.id.item_rcv_user_btn_air);
         }

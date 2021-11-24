@@ -1,5 +1,6 @@
 package com.infinity.reminder.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
@@ -13,12 +14,19 @@ import android.widget.Toast;
 
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeWarningDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.infinity.reminder.R;
+import com.infinity.reminder.retrofit2.APIUtils;
+import com.infinity.reminder.retrofit2.DataClient;
 import com.infinity.reminder.storage.Storager;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -61,7 +69,29 @@ public class UserActivity extends AppCompatActivity {
                 .setWarningButtonClick(new Closure() {
                     @Override
                     public void exec() {
-                        // click
+                        DataClient dataClient = APIUtils.getData();
+                        Call<String> callback = dataClient.addAlert("Bearer " + Storager.USER_APP.getAccess_token() , Storager.USER_APP.getUserData().getId());
+                        callback.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                                if (response.code() == 403){
+                                    FirebaseMessaging.getInstance().unsubscribeFromTopic("id-" + Storager.USER_APP.getUserData().getRole());
+                                    File dir = getFilesDir();
+                                    File file = new File(dir, Storager.FILE_INTERNAL);
+                                    file.delete();
+
+                                    Intent intent = new Intent(UserActivity.this , LoginActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+
+                            }
+                        });
+
                     }
                 })
                 .show();
