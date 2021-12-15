@@ -2,23 +2,36 @@ package com.infinity.reminder.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeWarningDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.infinity.reminder.R;
 import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
 import com.infinity.reminder.storage.Storager;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -31,28 +44,35 @@ import retrofit2.Response;
 public class UserActivity extends AppCompatActivity {
 
     private final int REQ_CODE_SPEECH_INPUT = 100;
+    private TextView txtName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+        addController();
+    }
+
+    private void addController() {
+        txtName = findViewById(R.id.txt_name);
+        txtName.setText(Storager.USER_APP.getUserData().getFullname());
     }
 
     public void addSchedule(View view) {
-        Intent intent = new Intent(this , ScheduleActivity.class);
-        intent.putExtra("id" , Storager.USER_APP.getUserData().getId());
+        Intent intent = new Intent(this, ScheduleActivity.class);
+        intent.putExtra("id", Storager.USER_APP.getUserData().getId());
         startActivity(intent);
     }
 
     public void onAirSensor(View view) {
-        Intent intent = new Intent(this , AirSensorActivity.class);
-        intent.putExtra("id" , Storager.USER_APP.getUserData().getId());
+        Intent intent = new Intent(this, AirSensorActivity.class);
+        intent.putExtra("id", Storager.USER_APP.getUserData().getId());
         startActivity(intent);
     }
 
     public void onMax30100Sensor(View view) {
-        Intent intent = new Intent(this , Max30100SensorActivity.class);
-        intent.putExtra("id" , Storager.USER_APP.getUserData().getId());
+        Intent intent = new Intent(this, Max30100SensorActivity.class);
+        intent.putExtra("id", Storager.USER_APP.getUserData().getId());
         startActivity(intent);
     }
 
@@ -70,17 +90,17 @@ public class UserActivity extends AppCompatActivity {
                     @Override
                     public void exec() {
                         DataClient dataClient = APIUtils.getData();
-                        Call<String> callback = dataClient.addAlert("Bearer " + Storager.USER_APP.getAccess_token() , Storager.USER_APP.getUserData().getId());
+                        Call<String> callback = dataClient.addAlert("Bearer " + Storager.USER_APP.getAccess_token(), Storager.USER_APP.getUserData().getId());
                         callback.enqueue(new Callback<String>() {
                             @Override
                             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                                if (response.code() == 403){
+                                if (response.code() == 403) {
                                     FirebaseMessaging.getInstance().unsubscribeFromTopic("id-" + Storager.USER_APP.getUserData().getRole());
                                     File dir = getFilesDir();
                                     File file = new File(dir, Storager.FILE_INTERNAL);
                                     file.delete();
 
-                                    Intent intent = new Intent(UserActivity.this , LoginActivity.class);
+                                    Intent intent = new Intent(UserActivity.this, LoginActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
                                 }
@@ -130,15 +150,31 @@ public class UserActivity extends AppCompatActivity {
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     //txtSpeechInput.setText(result.get(0));
 
-                    if(result.get(0).contains("Nhịp tim")){
-                        startActivity(new Intent(UserActivity.this , Max30100SensorActivity.class));
-                    }else if(result.get(0).contains("Không khí")){
-                        startActivity(new Intent(UserActivity.this , AirSensorActivity.class));
-                    }else if(result.get(0).contains("Lịch") || result.get(0).contains("Nhắc nhở")){
-                        startActivity(new Intent(UserActivity.this , ScheduleActivity.class));
+                    if (result.get(0).contains("Nhịp tim")) {
+                        startActivity(new Intent(UserActivity.this, Max30100SensorActivity.class));
+                    } else if (result.get(0).contains("Không khí")) {
+                        startActivity(new Intent(UserActivity.this, AirSensorActivity.class));
+                    } else if (result.get(0).contains("Lịch") || result.get(0).contains("Nhắc nhở")) {
+                        startActivity(new Intent(UserActivity.this, ScheduleActivity.class));
                     }
                 }
                 break;
+            }
+            default: {
+                IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+                // if the intentResult is null then
+                // toast a message as "cancelled"
+                if (intentResult != null) {
+                    if (intentResult.getContents() == null) {
+                        Toast.makeText(getBaseContext(), "Cancelled", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // if the intentResult is not null we'll set
+                        // the content and format of scan message
+                        Log.e("AAAA", intentResult.getContents());
+                    }
+                } else {
+                    super.onActivityResult(requestCode, resultCode, data);
+                }
             }
 
         }
@@ -152,11 +188,12 @@ public class UserActivity extends AppCompatActivity {
         Button btnCancel = dialog.findViewById(R.id.dialog_logout_btn_cancel);
 
         btnLogout.setOnClickListener(v -> {
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("id-" + Storager.USER_APP.getUserData().getId());
             File dir = getFilesDir();
             File file = new File(dir, Storager.FILE_INTERNAL);
             file.delete();
 
-            Intent intent = new Intent(this , LoginActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });
@@ -166,5 +203,51 @@ public class UserActivity extends AppCompatActivity {
         });
 
         dialog.show();
+    }
+
+    private Bitmap generateQR(String content, int size) {
+        Bitmap bitmap = null;
+        try {
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            bitmap = barcodeEncoder.encodeBitmap(content,
+                    BarcodeFormat.QR_CODE, size, size);
+        } catch (WriterException e) {
+            Log.e("generateQR()", e.getMessage());
+        }
+        return bitmap;
+    }
+
+    public void myQR(View view) {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_my_qr_code);
+        ImageView myImage = dialog.findViewById(R.id.dialog_my_qr_code_img);
+        myImage.setImageBitmap(generateQR(Storager.USER_APP.getUserData().getId() + "", getWindow().getDecorView().getWidth() / 2));
+        dialog.show();
+
+    }
+
+    public void scanQR(View view) {
+        IntentIntegrator intentIntegrator = new IntentIntegrator(this);
+        intentIntegrator.setPrompt("Quét mã");
+        intentIntegrator.setOrientationLocked(true);
+        intentIntegrator.initiateScan();
+    }
+
+    public void infor(View view) {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_infor);
+
+        TextView txtID = dialog.findViewById(R.id.dialog_infor_txt_id);
+        TextView txtName = dialog.findViewById(R.id.dialog_infor_txt_name);
+        dialog.findViewById(R.id.dialog_infor_txt_name_btn_close).setOnClickListener(v -> {
+            dialog.cancel();
+        });
+
+        txtID.setText(Storager.USER_APP.getUserData().getId() + "");
+        txtName.setText(Storager.USER_APP.getUserData().getFullname());
+
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 }

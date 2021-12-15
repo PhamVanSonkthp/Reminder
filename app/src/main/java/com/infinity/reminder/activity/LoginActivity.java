@@ -71,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                 Storager.USER_APP.setUserData(userData);
                 Storager.USER_APP.getUserData().setRole(data.getInt("role"));
                 Storager.USER_APP.getUserData().setId(data.getInt("id"));
+                Storager.USER_APP.getUserData().setFullname(data.getString("fullname"));
 
                 if(Storager.USER_APP.getUserData().getRole() == 1){
                     Intent intent = new Intent(LoginActivity.this, UserActivity.class);
@@ -175,5 +176,9 @@ public class LoginActivity extends AppCompatActivity {
                 cancelDialogProcessing();
             }
         });
+    }
+
+    public void signUp(View view) {
+
     }
 }

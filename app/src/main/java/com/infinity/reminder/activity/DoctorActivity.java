@@ -78,6 +78,8 @@ public class DoctorActivity extends AppCompatActivity {
     }
 
     public void logout(View view) {
+
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("id-" + Storager.USER_APP.getUserData().getId());
         File dir = getFilesDir();
         File file = new File(dir, Storager.FILE_INTERNAL);
         file.delete();
