@@ -9,8 +9,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -179,6 +182,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signUp(View view) {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_register);
 
+        TextView txtID = dialog.findViewById(R.id.dialog_infor_txt_id);
+        TextView txtName = dialog.findViewById(R.id.dialog_infor_txt_name);
+        dialog.findViewById(R.id.dialog_infor_txt_name_btn_close).setOnClickListener(v -> {
+            dialog.cancel();
+        });
+
+        txtID.setText(Storager.USER_APP.getUserData().getId() + "");
+        txtName.setText(Storager.USER_APP.getUserData().getFullname());
+
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 }

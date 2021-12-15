@@ -234,20 +234,20 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void infor(View view) {
-        Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_infor);
-
-        TextView txtID = dialog.findViewById(R.id.dialog_infor_txt_id);
-        TextView txtName = dialog.findViewById(R.id.dialog_infor_txt_name);
-        dialog.findViewById(R.id.dialog_infor_txt_name_btn_close).setOnClickListener(v -> {
-            dialog.cancel();
-        });
-
-        txtID.setText(Storager.USER_APP.getUserData().getId() + "");
-        txtName.setText(Storager.USER_APP.getUserData().getFullname());
-
-        dialog.show();
-        Window window = dialog.getWindow();
-        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//        Dialog dialog = new Dialog(this);
+//        dialog.setContentView(R.layout.dialog_infor);
+//
+//        TextView txtID = dialog.findViewById(R.id.dialog_infor_txt_id);
+//        TextView txtName = dialog.findViewById(R.id.dialog_infor_txt_name);
+//        dialog.findViewById(R.id.dialog_infor_txt_name_btn_close).setOnClickListener(v -> {
+//            dialog.cancel();
+//        });
+//
+//        txtID.setText(Storager.USER_APP.getUserData().getId() + "");
+//        txtName.setText(Storager.USER_APP.getUserData().getFullname());
+//
+//        dialog.show();
+//        Window window = dialog.getWindow();
+//        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 }
