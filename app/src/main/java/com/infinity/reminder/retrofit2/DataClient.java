@@ -40,10 +40,10 @@ public interface DataClient {
     Call<DataListUserByManager> getListUserByManager(@Header("Authorization") String token);
 
     @GET("airdata/get-list-by-user/{id}")
-    Call<DataAir> getDataAir(@Header("Authorization") String token , @Path("id") int id);
+    Call<DataAir> getDataAir(@Header("Authorization") String token , @Header("time") String time , @Path("id") int id);
 
     @GET("max30110/get-list-by-user/{id}")
-    Call<DataMax30100> getMax30100(@Header("Authorization") String token , @Path("id") int id);
+    Call<DataMax30100> getMax30100(@Header("Authorization") String token , @Header("time") String time, @Path("id") int id);
 
     @FormUrlEncoded
     @POST("auth/login")

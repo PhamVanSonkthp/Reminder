@@ -3,9 +3,12 @@ package com.infinity.reminder.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -17,6 +20,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.infinity.reminder.R;
+import com.infinity.reminder.helper.Protecter;
 import com.infinity.reminder.model.DataAir;
 import com.infinity.reminder.model.DataMax30100;
 import com.infinity.reminder.retrofit2.APIUtils;
@@ -24,8 +28,11 @@ import com.infinity.reminder.retrofit2.DataClient;
 import com.infinity.reminder.storage.Storager;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,18 +42,30 @@ public class Max30100SensorActivity extends AppCompatActivity {
 
     private LineChart lineChart;
     private int id;
+    private EditText edtTime;
+    final Calendar myCalendar = Calendar.getInstance();
+    DatePickerDialog.OnDateSetListener date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_max30100_sensor);
         addController();
+        addEvents();
         getData();
+    }
+
+    private void addEvents() {
+        edtTime.setOnClickListener(v -> {
+            new DatePickerDialog(this, date, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+        });
     }
 
     private void getData() {
         DataClient dataClient = APIUtils.getData();
-        Call<DataMax30100> callback = dataClient.getMax30100("Bearer " + Storager.USER_APP.getAccess_token() , id);
+        Call<DataMax30100> callback = dataClient.getMax30100("Bearer " + Storager.USER_APP.getAccess_token() , edtTime.getText().toString(), id);
         callback.enqueue(new Callback<DataMax30100>() {
             @Override
             public void onResponse(@NonNull Call<DataMax30100> call, @NonNull Response<DataMax30100> response) {
@@ -73,7 +92,27 @@ public class Max30100SensorActivity extends AppCompatActivity {
         });
     }
 
+    private void updateLabel() {
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        edtTime.setText(sdf.format(myCalendar.getTime()));
+        getData();
+    }
+
     private void addController() {
+
+        edtTime = findViewById(R.id.edt_time_max30100);
+
+        edtTime.setText(Protecter.getDate());
+        date = (view, year, monthOfYear, dayOfMonth) -> {
+            // TODO Auto-generated method stub
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+        };
+
         id = getIntent().getIntExtra("id", 0);
         lineChart = findViewById(R.id.line_chart);
 

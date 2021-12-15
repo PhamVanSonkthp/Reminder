@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -136,6 +137,10 @@ public class ScheduleActivity extends AppCompatActivity {
         dataSchedules = new ArrayList<>();
         adapterRCVSchedule = new AdapterRCVSchedule(this, dataSchedules);
         rcvRemind.setAdapter(adapterRCVSchedule);
+
+        if(Storager.USER_APP.getUserData().getRole() == 1){
+            findViewById(R.id.view_bottom).setVisibility(View.GONE);
+        }
     }
 
     public void addSchedule(View view) {

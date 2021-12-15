@@ -46,6 +46,9 @@ public class AdapterRCVSchedule extends RecyclerView.Adapter<RecyclerView.ViewHo
         viewhodler.txtTitle.setText(arrItem.get(position).getContent());
         viewhodler.txtTime.setText(arrItem.get(position).getTime());
 
+        if(Storager.USER_APP.getUserData().getRole() == 1){
+            viewhodler.imgDelete.setVisibility(View.GONE);
+        }
         int pos = position;
         viewhodler.imgDelete.setOnClickListener(v -> {
             DataClient dataClient = APIUtils.getData();
