@@ -185,14 +185,14 @@ public class LoginActivity extends AppCompatActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_register);
 
-        TextView txtID = dialog.findViewById(R.id.dialog_infor_txt_id);
-        TextView txtName = dialog.findViewById(R.id.dialog_infor_txt_name);
-        dialog.findViewById(R.id.dialog_infor_txt_name_btn_close).setOnClickListener(v -> {
-            dialog.cancel();
-        });
-
-        txtID.setText(Storager.USER_APP.getUserData().getId() + "");
-        txtName.setText(Storager.USER_APP.getUserData().getFullname());
+//        TextView txtID = dialog.findViewById(R.id.dialog_infor_txt_id);
+//        TextView txtName = dialog.findViewById(R.id.dialog_infor_txt_name);
+//        dialog.findViewById(R.id.dialog_infor_txt_name_btn_close).setOnClickListener(v -> {
+//            dialog.cancel();
+//        });
+//
+//        txtID.setText(Storager.USER_APP.getUserData().getId() + "");
+//        txtName.setText(Storager.USER_APP.getUserData().getFullname());
 
         dialog.show();
         Window window = dialog.getWindow();

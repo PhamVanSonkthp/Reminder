@@ -166,7 +166,7 @@ public class UserActivity extends AppCompatActivity {
                 // toast a message as "cancelled"
                 if (intentResult != null) {
                     if (intentResult.getContents() == null) {
-                        Toast.makeText(getBaseContext(), "Cancelled", Toast.LENGTH_SHORT).show();
+
                     } else {
                         // if the intentResult is not null we'll set
                         // the content and format of scan message

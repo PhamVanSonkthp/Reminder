@@ -144,8 +144,20 @@ public class ScheduleActivity extends AppCompatActivity {
     }
 
     public void addSchedule(View view) {
+
         String title = edtTitle.getText().toString();
         String time = txtTime.getText().toString();
+
+        if(time.equals("Đặt thời gian")){
+            Toast.makeText(this, "Vui lòng chọn thời gian", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(title.length() == 0){
+            Toast.makeText(this, "Vui lòng nhập nội dung", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         DataClient dataClient = APIUtils.getData();
         Call<String> callback = dataClient.addRemind("Bearer " + Storager.USER_APP.getAccess_token() , title, time , 1 , id);
         callback.enqueue(new Callback<String>() {

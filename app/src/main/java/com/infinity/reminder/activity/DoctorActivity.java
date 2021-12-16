@@ -7,9 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.infinity.reminder.R;
 import com.infinity.reminder.adapter.AdapterRCVUser;
 import com.infinity.reminder.model.DataListUserByManager;
@@ -87,5 +92,41 @@ public class DoctorActivity extends AppCompatActivity {
         Intent intent = new Intent(this , LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    public void scanQR(View view) {
+        IntentIntegrator intentIntegrator = new IntentIntegrator(this);
+        intentIntegrator.setPrompt("Quét mã");
+        intentIntegrator.setOrientationLocked(true);
+        intentIntegrator.initiateScan();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case 1: {
+
+                break;
+            }
+            default: {
+                IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+                // if the intentResult is null then
+                // toast a message as "cancelled"
+                if (intentResult != null) {
+                    if (intentResult.getContents() == null) {
+
+                    } else {
+                        // if the intentResult is not null we'll set
+                        // the content and format of scan message
+                        Log.e("AAAA", intentResult.getContents());
+                    }
+                } else {
+                    super.onActivityResult(requestCode, resultCode, data);
+                }
+            }
+
+        }
     }
 }

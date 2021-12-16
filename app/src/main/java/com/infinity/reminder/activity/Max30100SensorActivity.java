@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -45,6 +46,9 @@ public class Max30100SensorActivity extends AppCompatActivity {
     private EditText edtTime;
     final Calendar myCalendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener date;
+    TextView txtBMPMin , txtBMPMax , txtBMPMedium;
+    TextView txtSPO2Min , txtSPO2Max , txtSPO2Medium;
+    TextView txtIRMin , txtIRMax , txtIRMedium;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,57 @@ public class Max30100SensorActivity extends AppCompatActivity {
                     lineChart.setData(generateDataLine(response.body().getData().getData() ));
                     lineChart.notifyDataSetChanged();
                     lineChart.invalidate();
+
+                    List<DataMax30100.DataListMax30100> dataListAirs = response.body().getData().getData();
+                    float minBMP = 0 , maxBMP = 0, totalBMP = 0,
+                            minSPO2 = 0 , maxSPO2 = 0, totalSPO2 = 0,
+                            minIR = 0 , maxIR = 0, totalIR = 0;
+                    if(dataListAirs.size() > 0){
+                        minBMP = dataListAirs.get(0).getBmp();
+                        maxBMP = dataListAirs.get(0).getBmp();
+                        minSPO2 = dataListAirs.get(0).getSpo2();
+                        maxSPO2 = dataListAirs.get(0).getSpo2();
+                        minIR = dataListAirs.get(0).getIr();
+                        maxIR = dataListAirs.get(0).getIr();
+                    }
+
+                    for(int i = 0 ; i < dataListAirs.size() ; i++){
+                        if(dataListAirs.get(i).getBmp() < minBMP){
+                            minBMP = dataListAirs.get(i).getBmp();
+                        }
+                        if(dataListAirs.get(i).getBmp() > maxBMP){
+                            maxBMP = dataListAirs.get(i).getBmp();
+                        }
+                        if(dataListAirs.get(i).getSpo2() < minSPO2){
+                            minSPO2 = dataListAirs.get(i).getSpo2();
+                        }
+                        if(dataListAirs.get(i).getSpo2() > maxSPO2){
+                            maxSPO2 = dataListAirs.get(i).getSpo2();
+                        }
+                        if(dataListAirs.get(i).getIr() < minIR){
+                            minIR = dataListAirs.get(i).getIr();
+                        }
+                        if(dataListAirs.get(i).getIr() > maxIR){
+                            maxIR = dataListAirs.get(i).getIr();
+                        }
+
+                        totalBMP += dataListAirs.get(i).getBmp();
+                        totalSPO2 += dataListAirs.get(i).getSpo2();
+                        totalIR += dataListAirs.get(i).getIr();
+                    }
+
+                    txtBMPMin.setText(minBMP+"");
+                    txtBMPMax.setText(maxBMP+"");
+                    txtBMPMedium.setText((totalBMP / (dataListAirs.size() > 0 ? dataListAirs.size() : 1)) +"");
+
+                    txtSPO2Min.setText(minSPO2+"");
+                    txtSPO2Max.setText(maxSPO2+"");
+                    txtSPO2Medium.setText((totalSPO2 / (dataListAirs.size() > 0 ? dataListAirs.size() : 1)) +"");
+
+                    txtIRMin.setText(minIR+"");
+                    txtIRMax.setText(maxIR+"");
+                    txtIRMedium.setText((totalIR / (dataListAirs.size() > 0 ? dataListAirs.size() : 1)) +"");
+
                 }else if (response.code() == 403){
                     FirebaseMessaging.getInstance().unsubscribeFromTopic("id-" + Storager.USER_APP.getUserData().getRole());
                     File dir = getFilesDir();
@@ -101,6 +156,19 @@ public class Max30100SensorActivity extends AppCompatActivity {
     }
 
     private void addController() {
+
+        txtBMPMin = findViewById(R.id.txt_bmp_min);
+        txtBMPMax = findViewById(R.id.txt_bmp_max);
+        txtBMPMedium = findViewById(R.id.txt_bmp_medium);
+
+        txtSPO2Min = findViewById(R.id.txt_spo2_min);
+        txtSPO2Max = findViewById(R.id.txt_spo2_max);
+        txtSPO2Medium = findViewById(R.id.txt_spo2_medium);
+
+        txtIRMin = findViewById(R.id.txt_ir_min);
+        txtIRMax = findViewById(R.id.txt_ir_max);
+        txtIRMedium = findViewById(R.id.txt_ir_medium);
+
 
         edtTime = findViewById(R.id.edt_time_max30100);
 
