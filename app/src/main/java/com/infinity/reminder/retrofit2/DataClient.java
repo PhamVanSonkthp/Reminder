@@ -3,6 +3,7 @@ package com.infinity.reminder.retrofit2;
 import com.infinity.reminder.model.DataAir;
 import com.infinity.reminder.model.DataListUserByManager;
 import com.infinity.reminder.model.DataMax30100;
+import com.infinity.reminder.model.DataRegister;
 import com.infinity.reminder.model.DataSchedule;
 import com.infinity.reminder.model.User;
 
@@ -48,6 +49,23 @@ public interface DataClient {
     @FormUrlEncoded
     @POST("auth/login")
     Call<User> login(@Field("username") String username, @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("auth/register")
+    Call<DataRegister> register(
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("fullname") String name,
+            @Field("email") String email,
+            @Field("phone") String phone,
+            @Field("age") int age,
+            @Field("role") int role,
+            @Field("address") String address,
+            @Field("buildingId") int buildingId,
+            @Field("lstDoctorId") String lstDoctorId,
+            @Field("lstManagerId") String lstManagerId,
+            @Field("lstUserId") String lstUserId
+    );
 
     @Multipart
     @POST("add-record")

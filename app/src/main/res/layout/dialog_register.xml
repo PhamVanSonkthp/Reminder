@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <ImageButton
-        android:id="@+id/dialog_register_txt_name_btn_close"
+        android:id="@+id/dialog_register_btn_close"
         android:layout_marginEnd="@dimen/_5ssp"
         android:layout_marginTop="@dimen/_5ssp"
         android:layout_width="@dimen/_25ssp"
@@ -16,24 +16,6 @@
         android:background="@null"
         android:src="@drawable/ic_baseline_close_24"
         app:tint="@color/red" />
-
-    <TextView
-        android:textSize="@dimen/_9ssp"
-        android:text="Họ và tên:"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <EditText
-        android:id="@+id/dialog_register_edt_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/btn_back_black"
-        android:hint="Họ và tên"
-        android:padding="@dimen/_10ssp"
-        android:imeOptions="actionNext"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white" />
-
 
     <TextView
         android:layout_marginTop="@dimen/_10ssp"
@@ -71,7 +53,26 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white" />
 
+    <TextView
+        android:layout_marginTop="@dimen/_10ssp"
+        android:textSize="@dimen/_9ssp"
+        android:text="Họ và tên:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/dialog_register_edt_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_back_black"
+        android:hint="Họ và tên"
+        android:padding="@dimen/_10ssp"
+        android:imeOptions="actionNext"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dialog_register_btn_register"
         android:layout_marginTop="@dimen/_10ssp"
         android:layout_gravity="end"
         android:layout_marginEnd="@dimen/_5ssp"

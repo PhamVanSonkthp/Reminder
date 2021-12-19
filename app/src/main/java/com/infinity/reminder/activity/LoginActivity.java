@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.infinity.reminder.R;
+import com.infinity.reminder.model.DataRegister;
 import com.infinity.reminder.model.User;
 import com.infinity.reminder.model.UserData;
 import com.infinity.reminder.retrofit2.APIUtils;
@@ -185,14 +186,57 @@ public class LoginActivity extends AppCompatActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_register);
 
-//        TextView txtID = dialog.findViewById(R.id.dialog_infor_txt_id);
-//        TextView txtName = dialog.findViewById(R.id.dialog_infor_txt_name);
-//        dialog.findViewById(R.id.dialog_infor_txt_name_btn_close).setOnClickListener(v -> {
-//            dialog.cancel();
-//        });
-//
-//        txtID.setText(Storager.USER_APP.getUserData().getId() + "");
-//        txtName.setText(Storager.USER_APP.getUserData().getFullname());
+        EditText edtUserName = dialog.findViewById(R.id.dialog_register_edt_user_name);
+        EditText edtPassword = dialog.findViewById(R.id.dialog_register_edt_password);
+        EditText edtName = dialog.findViewById(R.id.dialog_register_edt_name);
+
+        dialog.findViewById(R.id.dialog_register_btn_close).setOnClickListener(v -> {
+            dialog.cancel();
+        });
+
+        dialog.findViewById(R.id.dialog_register_btn_register).setOnClickListener(v -> {
+            DataClient dataClient = APIUtils.getData();
+            Call<DataRegister> callback = dataClient.register(
+                    edtUserName.getText().toString(),
+                    edtPassword.getText().toString(),
+                    edtName.getText().toString(),
+                    "abc@gmail.com",
+                    "0378115555",
+                    58,
+                    1,
+                    "hn",
+                    1,
+                    "[]",
+                    "[]",
+                    "[]"
+            );
+            callback.enqueue(new Callback<DataRegister>() {
+                @Override
+                public void onResponse(@NonNull Call<DataRegister> call, @NonNull Response<DataRegister> response) {
+                    cancelDialogProcessing();
+                    if(response.code() == 200){
+                        DataRegister dataRegister = response.body();
+                        Log.e("AAAA" , dataRegister.getCode());
+                        if(dataRegister.getCode().equals("00")){
+                            dialog.cancel();
+                            Toast.makeText(LoginActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                        }else if(dataRegister.getCode().equals("04")){
+                            dialog.cancel();
+                            Toast.makeText(LoginActivity.this, "Mật khẩu không được dưới 6 ký tự", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(LoginActivity.this, "Tên đăng nhập đã tồn tại", Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+                        Toast.makeText(LoginActivity.this, "Có lỗi", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<DataRegister> call, @NonNull Throwable t) {
+                    cancelDialogProcessing();
+                }
+            });
+        });
 
         dialog.show();
         Window window = dialog.getWindow();
