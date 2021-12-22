@@ -43,14 +43,7 @@ public class DoctorActivity extends AppCompatActivity {
         addController();
     }
 
-    private void addController() {
-        // ánh xạ
-        rcvRemind = findViewById(R.id.rcv_user);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rcvRemind.setLayoutManager(linearLayoutManager);
-        rcvRemind.setNestedScrollingEnabled(false);
-        users = new ArrayList<>();
-
+    private void loadData(){
         DataClient dataClient = APIUtils.getData();
         Call<DataListUserByManager> callback = dataClient.getListUserByManager("Bearer " + Storager.USER_APP.getAccess_token());
         callback.enqueue(new Callback<DataListUserByManager>() {
@@ -78,8 +71,16 @@ public class DoctorActivity extends AppCompatActivity {
 
             }
         });
+    }
 
-
+    private void addController() {
+        // ánh xạ
+        rcvRemind = findViewById(R.id.rcv_user);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rcvRemind.setLayoutManager(linearLayoutManager);
+        rcvRemind.setNestedScrollingEnabled(false);
+        users = new ArrayList<>();
+        loadData();
     }
 
     public void logout(View view) {
@@ -115,12 +116,21 @@ public class DoctorActivity extends AppCompatActivity {
                 // if the intentResult is null then
                 // toast a message as "cancelled"
                 if (intentResult != null) {
-                    if (intentResult.getContents() == null) {
 
-                    } else {
-                        // if the intentResult is not null we'll set
-                        // the content and format of scan message
-                        Log.e("AAAA", intentResult.getContents());
+                    if (intentResult.getContents() != null) {
+                        DataClient dataClient = APIUtils.getData();
+                        Call<String> callback = dataClient.addUserByDoctor("Bearer " + Storager.USER_APP.getAccess_token() , intentResult.getContents());
+                        callback.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                                loadData();
+                            }
+
+                            @Override
+                            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+
+                            }
+                        });
                     }
                 } else {
                     super.onActivityResult(requestCode, resultCode, data);

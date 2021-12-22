@@ -15,16 +15,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeWarningDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.infinity.reminder.R;
+import com.infinity.reminder.activity.DoctorActivity;
 import com.infinity.reminder.activity.LoginActivity;
 import com.infinity.reminder.activity.ScheduleActivity;
 import com.infinity.reminder.activity.AirSensorActivity;
 import com.infinity.reminder.activity.Max30100SensorActivity;
+import com.infinity.reminder.model.DataListUserByManager;
 import com.infinity.reminder.model.UserData;
+import com.infinity.reminder.retrofit2.APIUtils;
+import com.infinity.reminder.retrofit2.DataClient;
 import com.infinity.reminder.storage.Storager;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AdapterRCVUser extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -67,6 +76,23 @@ public class AdapterRCVUser extends RecyclerView.Adapter<RecyclerView.ViewHolder
             intent.putExtra("id" , arrItem.get(position).getId());
             context.startActivity(intent);
         });
+
+        viewhodler.btnDelete.setOnClickListener(v -> {
+            DataClient dataClient = APIUtils.getData();
+            Call<String> callback = dataClient.deleteUserByDoctor("Bearer " + Storager.USER_APP.getAccess_token() , arrItem.get(position).getId());
+            callback.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                    arrItem.remove(position);
+                    notifyDataSetChanged();
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+
+                }
+            });
+        });
     }
 
     @Override
@@ -76,7 +102,7 @@ public class AdapterRCVUser extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     static class Viewhodler extends RecyclerView.ViewHolder {
         TextView  txtName, txtPhone, txtAge;
-        ImageView btnSchedule,btnHeart,btnAir;
+        ImageView btnSchedule,btnHeart,btnAir, btnDelete;
 
         Viewhodler(@NonNull View itemView) {
             super(itemView);
@@ -86,6 +112,7 @@ public class AdapterRCVUser extends RecyclerView.Adapter<RecyclerView.ViewHolder
             btnSchedule = itemView.findViewById(R.id.item_rcv_user_btn_schedule);
             btnHeart = itemView.findViewById(R.id.item_rcv_user_btn_heart);
             btnAir = itemView.findViewById(R.id.item_rcv_user_btn_air);
+            btnDelete = itemView.findViewById(R.id.item_rcv_user_btn_delete);
         }
     }
 }

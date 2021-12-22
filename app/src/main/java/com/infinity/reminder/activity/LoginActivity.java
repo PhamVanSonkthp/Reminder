@@ -127,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 cancelDialogProcessing();
-                if(response.code() == 200){
+                if(response.code() == 200 && response.body().getUserData() != null){
                     // đăng nhập thành công
                     Storager.USER_APP = response.body();
 

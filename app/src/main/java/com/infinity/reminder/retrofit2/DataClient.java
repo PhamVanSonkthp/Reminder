@@ -51,6 +51,14 @@ public interface DataClient {
     Call<User> login(@Field("username") String username, @Field("password") String password);
 
     @FormUrlEncoded
+    @POST("user/doctor-delete-relation-user")
+    Call<String> deleteUserByDoctor(@Header("Authorization") String token ,@Field("userId") int id);
+
+    @FormUrlEncoded
+    @POST("user/doctor-add-relation-user")
+    Call<String> addUserByDoctor(@Header("Authorization") String token ,@Field("userId") String id);
+
+    @FormUrlEncoded
     @POST("auth/register")
     Call<DataRegister> register(
             @Field("username") String username,
