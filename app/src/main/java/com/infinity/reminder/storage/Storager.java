@@ -1,6 +1,6 @@
 package com.infinity.reminder.storage;
 
-import com.infinity.reminder.model.User;
+import com.infinity.reminder.model_objects.User;
 
 public class Storager {
     public static final String FILE_INTERNAL = "Client.infor";

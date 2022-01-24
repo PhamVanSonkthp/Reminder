@@ -1,4 +1,4 @@
-package com.infinity.reminder.model;
+package com.infinity.reminder.model_objects;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

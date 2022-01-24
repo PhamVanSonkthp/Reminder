@@ -7,7 +7,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -22,8 +21,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.infinity.reminder.R;
 import com.infinity.reminder.helper.Protecter;
-import com.infinity.reminder.model.DataAir;
-import com.infinity.reminder.model.DataMax30100;
+import com.infinity.reminder.model_objects.DataMax30100;
 import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
 import com.infinity.reminder.storage.Storager;

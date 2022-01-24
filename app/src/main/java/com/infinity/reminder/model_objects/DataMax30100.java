@@ -1,29 +1,29 @@
-package com.infinity.reminder.model;
+package com.infinity.reminder.model_objects;
 
 import java.util.List;
 
-public class DataAir {
+public class DataMax30100 {
 
-    private DataAirValue data;
+    private DataMax30100Value data;
 
-    public DataAirValue getData() {
+    public DataMax30100Value getData() {
         return data;
     }
 
-    public void setData(DataAirValue data) {
+    public void setData(DataMax30100Value data) {
         this.data = data;
     }
 
-    public DataAir(DataAirValue data) {
+    public DataMax30100(DataMax30100Value data) {
         this.data = data;
     }
 
-    public class DataAirValue{
+    public class DataMax30100Value{
         int pageIndex;
         int pageSize;
         int totalItems;
         int totalPages;
-        List<DataListAir> data;
+        List<DataListMax30100> data;
 
         public int getPageIndex() {
             return pageIndex;
@@ -57,15 +57,15 @@ public class DataAir {
             this.totalPages = totalPages;
         }
 
-        public List<DataListAir> getData() {
+        public List<DataListMax30100> getData() {
             return data;
         }
 
-        public void setData(List<DataListAir> data) {
+        public void setData(List<DataListMax30100> data) {
             this.data = data;
         }
 
-        public DataAirValue(int pageIndex, int pageSize, int totalItems, int totalPages, List<DataListAir> data) {
+        public DataMax30100Value(int pageIndex, int pageSize, int totalItems, int totalPages, List<DataListMax30100> data) {
             this.pageIndex = pageIndex;
             this.pageSize = pageSize;
             this.totalItems = totalItems;
@@ -74,12 +74,14 @@ public class DataAir {
         }
     }
 
-    public class DataListAir{
+    public class DataListMax30100{
         int id;
         int user_id;
-        int co;
-        int gas;
-        int status;
+        int bmp;
+        int spo2;
+        int ir;
+        String create_at;
+        String update_at;
 
         public int getId() {
             return id;
@@ -97,36 +99,54 @@ public class DataAir {
             this.user_id = user_id;
         }
 
-        public int getCo() {
-            return co;
+        public int getBmp() {
+            return bmp;
         }
 
-        public void setCo(int co) {
-            this.co = co;
+        public void setBmp(int bmp) {
+            this.bmp = bmp;
         }
 
-        public int getGas() {
-            return gas;
+        public int getSpo2() {
+            return spo2;
         }
 
-        public void setGas(int gas) {
-            this.gas = gas;
+        public void setSpo2(int spo2) {
+            this.spo2 = spo2;
         }
 
-        public int getStatus() {
-            return status;
+        public int getIr() {
+            return ir;
         }
 
-        public void setStatus(int status) {
-            this.status = status;
+        public void setIr(int ir) {
+            this.ir = ir;
         }
 
-        public DataListAir(int id, int user_id, int co, int gas, int status) {
+        public String getCreate_at() {
+            return create_at;
+        }
+
+        public void setCreate_at(String create_at) {
+            this.create_at = create_at;
+        }
+
+        public String getUpdate_at() {
+            return update_at;
+        }
+
+        public void setUpdate_at(String update_at) {
+            this.update_at = update_at;
+        }
+
+        public DataListMax30100(int id, int user_id, int bmp, int spo2, int ir, String create_at, String update_at) {
             this.id = id;
             this.user_id = user_id;
-            this.co = co;
-            this.gas = gas;
-            this.status = status;
+            this.bmp = bmp;
+            this.spo2 = spo2;
+            this.ir = ir;
+            this.create_at = create_at;
+            this.update_at = update_at;
         }
     }
 }

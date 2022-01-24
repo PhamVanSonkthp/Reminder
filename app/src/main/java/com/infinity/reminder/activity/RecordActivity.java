@@ -14,7 +14,7 @@ import android.widget.Button;
 
 import com.infinity.reminder.R;
 import com.infinity.reminder.adapter.AdapterRCVRecord;
-import com.infinity.reminder.model.RecordChat;
+import com.infinity.reminder.model_objects.RecordChat;
 import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
 

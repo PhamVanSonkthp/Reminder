@@ -7,18 +7,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.infinity.reminder.R;
 import com.infinity.reminder.adapter.AdapterRCVUser;
-import com.infinity.reminder.model.DataListUserByManager;
-import com.infinity.reminder.model.UserData;
+import com.infinity.reminder.model_objects.DataListUserByManager;
+import com.infinity.reminder.model_objects.UserData;
 import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
 import com.infinity.reminder.storage.Storager;

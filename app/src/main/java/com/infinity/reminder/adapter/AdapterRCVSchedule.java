@@ -12,8 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.infinity.reminder.R;
-import com.infinity.reminder.activity.ScheduleActivity;
-import com.infinity.reminder.model.DataSchedule;
+import com.infinity.reminder.model_objects.DataSchedule;
 import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
 import com.infinity.reminder.storage.Storager;

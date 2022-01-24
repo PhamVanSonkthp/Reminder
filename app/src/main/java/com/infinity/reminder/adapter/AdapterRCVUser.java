@@ -1,34 +1,25 @@
 package com.infinity.reminder.adapter;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeWarningDialog;
-import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.infinity.reminder.R;
-import com.infinity.reminder.activity.DoctorActivity;
-import com.infinity.reminder.activity.LoginActivity;
 import com.infinity.reminder.activity.ScheduleActivity;
 import com.infinity.reminder.activity.AirSensorActivity;
 import com.infinity.reminder.activity.Max30100SensorActivity;
-import com.infinity.reminder.model.DataListUserByManager;
-import com.infinity.reminder.model.UserData;
+import com.infinity.reminder.model_objects.UserData;
 import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
 import com.infinity.reminder.storage.Storager;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import retrofit2.Call;

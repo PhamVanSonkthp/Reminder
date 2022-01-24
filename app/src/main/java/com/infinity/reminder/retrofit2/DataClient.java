@@ -1,13 +1,11 @@
 package com.infinity.reminder.retrofit2;
 
-import com.infinity.reminder.model.DataAir;
-import com.infinity.reminder.model.DataListUserByManager;
-import com.infinity.reminder.model.DataMax30100;
-import com.infinity.reminder.model.DataRegister;
-import com.infinity.reminder.model.DataSchedule;
-import com.infinity.reminder.model.User;
-
-import java.util.List;
+import com.infinity.reminder.model_objects.DataAir;
+import com.infinity.reminder.model_objects.DataListUserByManager;
+import com.infinity.reminder.model_objects.DataMax30100;
+import com.infinity.reminder.model_objects.DataRegister;
+import com.infinity.reminder.model_objects.DataSchedule;
+import com.infinity.reminder.model_objects.User;
 
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;

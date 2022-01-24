@@ -250,4 +250,8 @@ public class UserActivity extends AppCompatActivity {
 //        Window window = dialog.getWindow();
 //        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     }
+
+    public void connectClock(View view) {
+        startActivity(new Intent(this , ListDeviceActivity.class));
+    }
 }

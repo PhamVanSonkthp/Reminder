@@ -1,4 +1,4 @@
-package com.infinity.reminder.model;
+package com.infinity.reminder.model_objects;
 
 public class RecordChat {
     private String message;
