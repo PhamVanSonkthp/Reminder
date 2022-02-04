@@ -1,5 +1,8 @@
 package com.infinity.reminder.activity;
 
+import static com.infinity.reminder.retrofit2.APIUtils.PBAP_UUID;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,9 +17,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.ParcelUuid;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,6 +37,8 @@ import com.infinity.reminder.data_sqllite.DBManager;
 import com.infinity.reminder.helper.Protecter;
 import com.infinity.reminder.model_objects.SensorInfor;
 import com.infinity.reminder.presenter.PresenterListDevice;
+import com.infinity.reminder.task.ConnectThread;
+import com.infinity.reminder.views.ViewConnectThread;
 import com.infinity.reminder.views.ViewListDeviceListener;
 import com.infinity.reminder.views.ViewRCVDeviceOnline;
 import com.infinity.reminder.views.ViewRCVDevicePaired;
@@ -39,11 +48,12 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListDeviceActivity extends AppCompatActivity implements ViewRCVDevicePaired, ViewRCVDeviceOnline, ViewListDeviceListener {
+public class ListDeviceActivity extends AppCompatActivity implements ViewRCVDevicePaired, ViewRCVDeviceOnline, ViewListDeviceListener , Handler.Callback, ViewConnectThread {
 
     private RecyclerView rcvDevicePaired;
     private ArrayList<SensorInfor> arrDevicePaired;
@@ -63,6 +73,13 @@ public class ListDeviceActivity extends AppCompatActivity implements ViewRCVDevi
     private IntentFilter intentFilter3;
     private DBManager dbManager;
     private PresenterListDevice presenterListDevice;
+    private Handler handler;
+    public static ConnectThread connectThread;
+    private String macAddressDevice;
+    public static int STATE_LISTENING = 2;
+    public static int STATE_CONNECTED = 1;
+    public static int STATE_DISCONNECTED = 0;
+    public static boolean isResult = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +126,7 @@ public class ListDeviceActivity extends AppCompatActivity implements ViewRCVDevi
         adapteRCVDevicePaired = new AdapteRCVDevicePaired(this, arrDevicePaired, this);
         rcvDevicePaired.setAdapter(adapteRCVDevicePaired);
 
+        handler = new Handler(this);
 
         arrDeviceOnline = new ArrayList<>();
         arrDeviceOnline.add(null);
@@ -138,11 +156,66 @@ public class ListDeviceActivity extends AppCompatActivity implements ViewRCVDevi
         }
     }
 
+    private void connectSensor() {
+        if (mBluetoothAdapter != null) {
+            try {
+                if (connectThread != null) {
+                    connectThread.cancel();
+                }
+                connectThread = new ConnectThread(this, mBluetoothAdapter.getRemoteDevice(macAddressDevice).createRfcommSocketToServiceRecord(ParcelUuid.fromString(PBAP_UUID).getUuid()), handler, this);
+                showDialogProcessing();
+
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        if (connectThread != null) {
+                            connectThread.connect();
+                        }
+                    }
+                };
+                thread.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public void onClickRCVDevicePaired(int position) {
-//        Intent i = new Intent(this, MainActivity.class);
-//        i.putExtra("device", arrDevicePaired.get(position));
-//        startActivity(i);
+
+
+        macAddressDevice = arrDevicePaired.get(position).getMacDevice();
+
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_transfer_wifi);
+
+        EditText edtName = dialog.findViewById(R.id.dialog_transfer_wifi_edt_name);
+        EditText edtPassword = dialog.findViewById(R.id.dialog_transfer_wifi_edt_password);
+        TextView txtTitle = dialog.findViewById(R.id.dialog_transfer_wifi_txt_title);
+        Button btnTransfer = dialog.findViewById(R.id.dialog_transfer_wifi_btn_transfer);
+
+        btnTransfer.setOnClickListener(v -> {
+            showDialogProcessing();
+            txtTitle.setText("Đang truyền thông tin: " + edtName.getText().toString() + "-" + edtPassword.getText().toString() + "$");
+            connectThread.write(edtName.getText().toString() + "-" + edtPassword.getText().toString() + "$");
+        });
+
+//        boolean connection = false;
+////        for (int i = 0; i < arrDevicePaired.size(); i++) {
+////            if (MainActivity.device.getMacDevice().equals(arrDevicePaired.get(i).getAddress())) {
+////                connection = true;
+////            }
+////        }
+        if (mBluetoothAdapter != null) {
+            connectSensor();
+        } else {
+            BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(arrDevicePaired.get(position).getMacDevice());
+            txtDialogProcessingTitle.setText("Đang kết nối...");
+            showDialogProcessing();
+            pairDevice(device);
+        }
+
+        dialog.show();
     }
 
     @Override
@@ -406,5 +479,61 @@ public class ListDeviceActivity extends AppCompatActivity implements ViewRCVDevi
     public void onFailStoreSensor(String error) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
         cancelDialogProcessing();
+    }
+
+    @Override
+    public boolean handleMessage(@NonNull Message msg) {
+        switch (msg.what) {
+            case 10:
+                byte[] readBuffError = (byte[]) msg.obj;
+                String tempMsgError = new String(readBuffError, 0, msg.arg1);
+                tempMsgError = tempMsgError.trim();
+
+                cancelDialogProcessing();
+            case 4:
+                byte[] readBuff = (byte[]) msg.obj;
+                String tempMsg = new String(readBuff, 0, msg.arg1);
+                tempMsg = tempMsg.trim();
+                cancelDialogProcessing();
+
+                break;
+            case 2:
+                cancelDialogProcessing();
+                break;
+            case 0:
+                cancelDialogProcessing();
+        }
+        return false;
+    }
+
+    @Override
+    public void onGetData(String value) {
+
+    }
+
+    @Override
+    public void onConnected() {
+        if (connectThread != null) {
+            connectThread.start();
+        }
+//        Message message = Message.obtain();
+//        message.what = STATE_CONNECTED;
+//        handler.sendMessage(message);
+
+
+    }
+
+    @Override
+    public void onError(String error) {
+        Message message = Message.obtain();
+        message.what = STATE_DISCONNECTED;
+        handler.sendMessage(message);
+    }
+
+    @Override
+    public void onRuned() {
+        Message message = Message.obtain();
+        message.what = STATE_LISTENING;
+        handler.sendMessage(message);
     }
 }
