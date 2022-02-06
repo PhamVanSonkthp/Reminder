@@ -195,7 +195,7 @@ public class ListDeviceActivity extends AppCompatActivity implements ViewRCVDevi
         Button btnTransfer = dialog.findViewById(R.id.dialog_transfer_wifi_btn_transfer);
 
         btnTransfer.setOnClickListener(v -> {
-            showDialogProcessing();
+            //showDialogProcessing();
             txtTitle.setText("Đang truyền thông tin: " + edtName.getText().toString() + "-" + edtPassword.getText().toString() + "$");
             connectThread.write(edtName.getText().toString() + "-" + edtPassword.getText().toString() + "$");
         });

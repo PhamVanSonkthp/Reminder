@@ -254,4 +254,8 @@ public class UserActivity extends AppCompatActivity {
     public void connectClock(View view) {
         startActivity(new Intent(this , ListDeviceActivity.class));
     }
+
+    public void bleConnectClock(View view) {
+        startActivity(new Intent(this , BLEConnectActivity.class));
+    }
 }

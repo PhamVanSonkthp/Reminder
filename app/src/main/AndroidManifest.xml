@@ -4,6 +4,8 @@
     package="com.infinity.reminder">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
@@ -19,6 +21,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -37,7 +43,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.DoctorActivity"
-            android:exported="true"></activity>
+            android:exported="true"/>
         <activity
             android:name=".activity.LoginActivity"
             android:exported="true">
@@ -49,7 +55,13 @@
         </activity>
         <activity
             android:name=".activity.RecordActivity"
-            android:exported="true"></activity>
+            android:exported="true"/>
+
+<!--        <activity-->
+<!--            android:name=".activity.BLEConnectActivity"/>-->
+
+        <activity android:name="com.infinity.reminder.activity.BLEConnectActivity"></activity>
+
         <activity
             android:name=".activity.Max30100SensorActivity"
             android:exported="false" />
@@ -61,7 +73,7 @@
             android:exported="true" />
         <activity
             android:name=".activity.UserActivity"
-            android:exported="true"></activity>
+            android:exported="true"/>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
