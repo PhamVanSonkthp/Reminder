@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -32,15 +35,18 @@ public class DoctorActivity extends AppCompatActivity {
     RecyclerView rcvRemind;
     ArrayList<UserData> users;
     AdapterRCVUser adapterRCVUser;
+    private Dialog dialogProcessing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor);
         addController();
+
     }
 
     private void loadData(){
+        showDialogProcessing();
         DataClient dataClient = APIUtils.getData();
         Call<DataListUserByManager> callback = dataClient.getListUserByManager("Bearer " + Storager.USER_APP.getAccess_token());
         callback.enqueue(new Callback<DataListUserByManager>() {
@@ -50,6 +56,7 @@ public class DoctorActivity extends AppCompatActivity {
                     users = (ArrayList<UserData>) response.body().getData();
                     adapterRCVUser = new AdapterRCVUser(DoctorActivity.this, users);
                     rcvRemind.setAdapter(adapterRCVUser);
+                    cancelDialogProcessing();
                 }else if (response.code() == 403){
                     FirebaseMessaging.getInstance().unsubscribeFromTopic("id-" + Storager.USER_APP.getUserData().getRole());
                     File dir = getFilesDir();
@@ -65,7 +72,8 @@ public class DoctorActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<DataListUserByManager> call, @NonNull Throwable t) {
-
+                Toast.makeText(DoctorActivity.this , t.getMessage() , Toast.LENGTH_SHORT).show();
+                cancelDialogProcessing();
             }
         });
     }
@@ -77,7 +85,24 @@ public class DoctorActivity extends AppCompatActivity {
         rcvRemind.setLayoutManager(linearLayoutManager);
         rcvRemind.setNestedScrollingEnabled(false);
         users = new ArrayList<>();
+
+        dialogProcessing = new Dialog(this);
+        dialogProcessing.setContentView(R.layout.dialog_processing);
+        dialogProcessing.setCancelable(false);
+
         loadData();
+    }
+
+    private void showDialogProcessing() {
+        if (dialogProcessing != null) {
+            dialogProcessing.show();
+        }
+    }
+
+    private void cancelDialogProcessing() {
+        if (dialogProcessing != null) {
+            dialogProcessing.dismiss();
+        }
     }
 
     public void logout(View view) {
@@ -113,8 +138,8 @@ public class DoctorActivity extends AppCompatActivity {
                 // if the intentResult is null then
                 // toast a message as "cancelled"
                 if (intentResult != null) {
-
                     if (intentResult.getContents() != null) {
+                        showDialogProcessing();
                         DataClient dataClient = APIUtils.getData();
                         Call<String> callback = dataClient.addUserByDoctor("Bearer " + Storager.USER_APP.getAccess_token() , intentResult.getContents());
                         callback.enqueue(new Callback<String>() {
@@ -125,7 +150,8 @@ public class DoctorActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-
+                                cancelDialogProcessing();
+                                Toast.makeText(DoctorActivity.this , t.getMessage() , Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

@@ -46,36 +46,41 @@ public class AdapterRCVUser extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Viewhodler viewhodler = (Viewhodler) holder;
-        viewhodler.txtName.setText(arrItem.get(position).getFullname());
-        viewhodler.txtPhone.setText(arrItem.get(position).getPhone());
-        viewhodler.txtAge.setText(arrItem.get(position).getAge()+"");
+        viewhodler.txtName.setText(arrItem.get(holder.getAdapterPosition()).getFullname());
+        viewhodler.txtPhone.setText(arrItem.get(holder.getAdapterPosition()).getPhone());
+        viewhodler.txtAge.setText(arrItem.get(holder.getAdapterPosition()).getAge()+"");
 
         viewhodler.btnSchedule.setOnClickListener(v -> {
             Intent intent = new Intent(context , ScheduleActivity.class);
-            intent.putExtra("id" , arrItem.get(position).getId());
+            intent.putExtra("id" , arrItem.get(holder.getAdapterPosition()).getId());
             context.startActivity(intent);
         });
 
         viewhodler.btnHeart.setOnClickListener(v -> {
             Intent intent = new Intent(context , Max30100SensorActivity.class);
-            intent.putExtra("id" , arrItem.get(position).getId());
+            intent.putExtra("id" , arrItem.get(holder.getAdapterPosition()).getId());
             context.startActivity(intent);
         });
 
         viewhodler.btnAir.setOnClickListener(v -> {
             Intent intent = new Intent(context , AirSensorActivity.class);
-            intent.putExtra("id" , arrItem.get(position).getId());
+            intent.putExtra("id" , arrItem.get(holder.getAdapterPosition()).getId());
             context.startActivity(intent);
         });
 
         viewhodler.btnDelete.setOnClickListener(v -> {
+
+            if(arrItem.size() > 0 && holder.getAdapterPosition() < arrItem.size()){
+                arrItem.remove(holder.getAdapterPosition());
+                notifyDataSetChanged();
+            }
+
             DataClient dataClient = APIUtils.getData();
             Call<String> callback = dataClient.deleteUserByDoctor("Bearer " + Storager.USER_APP.getAccess_token() , arrItem.get(position).getId());
             callback.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                    arrItem.remove(position);
-                    notifyDataSetChanged();
+
                 }
 
                 @Override

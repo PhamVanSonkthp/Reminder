@@ -49,11 +49,11 @@ public interface DataClient {
     Call<User> login(@Field("username") String username, @Field("password") String password);
 
     @FormUrlEncoded
-    @POST("user/doctor-delete-relation-user")
+    @POST("user/delete-relation-user")
     Call<String> deleteUserByDoctor(@Header("Authorization") String token ,@Field("userId") int id);
 
     @FormUrlEncoded
-    @POST("user/doctor-add-relation-user")
+    @POST("user/add-relation-user")
     Call<String> addUserByDoctor(@Header("Authorization") String token ,@Field("userId") String id);
 
     @FormUrlEncoded

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.infinity.reminder.R;
+import com.infinity.reminder.helper.Protecter;
 import com.infinity.reminder.model_objects.DataRegister;
 import com.infinity.reminder.model_objects.User;
 import com.infinity.reminder.model_objects.UserData;
@@ -144,6 +145,11 @@ public class LoginActivity extends AppCompatActivity {
                         jsonData.put("address", Storager.USER_APP.getUserData().getAddress());
                         jsonData.put("note", Storager.USER_APP.getUserData().getNote());
                         jsonData.put("job", Storager.USER_APP.getUserData().getJob());
+                        jsonData.put("health_insurance", Storager.USER_APP.getUserData().getHealth_insurance());
+                        jsonData.put("device_code", Storager.USER_APP.getUserData().getDevice_code());
+                        jsonData.put("channel", Storager.USER_APP.getUserData().getChannel());
+                        jsonData.put("ir_limit", Storager.USER_APP.getUserData().getIr_limit());
+                        jsonData.put("bpm_limit", Storager.USER_APP.getUserData().getBpm_limit());
                         jsonData.put("email_verified_at", Storager.USER_APP.getUserData().getEmail_verified_at());
                         jsonData.put("created_at", Storager.USER_APP.getUserData().getCreated_at());
                         jsonData.put("updated_at", Storager.USER_APP.getUserData().getUpdated_at());
@@ -184,21 +190,24 @@ public class LoginActivity extends AppCompatActivity {
 
         EditText edtUserName = dialog.findViewById(R.id.dialog_register_edt_user_name);
         EditText edtPassword = dialog.findViewById(R.id.dialog_register_edt_password);
+        EditText edtPhone = dialog.findViewById(R.id.dialog_register_edt_user_phone);
         EditText edtName = dialog.findViewById(R.id.dialog_register_edt_name);
+        EditText edtAge = dialog.findViewById(R.id.dialog_register_edt_user_age);
 
         dialog.findViewById(R.id.dialog_register_btn_close).setOnClickListener(v -> {
             dialog.cancel();
         });
 
         dialog.findViewById(R.id.dialog_register_btn_register).setOnClickListener(v -> {
+            showDialogProcessing();
             DataClient dataClient = APIUtils.getData();
             Call<DataRegister> callback = dataClient.register(
                     edtUserName.getText().toString(),
                     edtPassword.getText().toString(),
                     edtName.getText().toString(),
                     "abc@gmail.com",
-                    "0378115555",
-                    58,
+                    edtPhone.getText().toString(),
+                    Integer.parseInt( edtAge.getText().toString()),
                     1,
                     "hn",
                     1,
@@ -212,12 +221,10 @@ public class LoginActivity extends AppCompatActivity {
                     cancelDialogProcessing();
                     if(response.code() == 200){
                         DataRegister dataRegister = response.body();
-                        Log.e("AAAA" , dataRegister.getCode());
                         if(dataRegister.getCode().equals("00")){
                             dialog.cancel();
                             Toast.makeText(LoginActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                         }else if(dataRegister.getCode().equals("04")){
-                            dialog.cancel();
                             Toast.makeText(LoginActivity.this, "Mật khẩu không được dưới 6 ký tự", Toast.LENGTH_SHORT).show();
                         }else {
                             Toast.makeText(LoginActivity.this, "Tên đăng nhập đã tồn tại", Toast.LENGTH_SHORT).show();
