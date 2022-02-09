@@ -178,7 +178,7 @@ class BLEConnectActivity : AppCompatActivity() {
     }
 
     private fun bleIndicate() {
-        val text = editTextCharForIndicate.text.toString()
+        val text = editTextCharForIndicate.text.toString() + "$"
         val data = text.toByteArray(Charsets.UTF_8)
         charForIndicate?.let {
             it.value = data
