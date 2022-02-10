@@ -11,6 +11,7 @@ import com.infinity.reminder.model_objects.Wifi;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -18,6 +19,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
@@ -39,8 +41,20 @@ public interface DataClient {
     @GET("user/list-user-by-manager")
     Call<DataListUserByManager> getListUserByManager(@Header("Authorization") String token);
 
-    @GET("user/api/admin/wifi/get-wifi/{id_device}")
+    @GET("admin/wifi/get-wifi/{id_device}")
     Call<Wifi> getListWifi(@Header("Authorization") String token, @Path("id_device") String id_device);
+
+    @FormUrlEncoded
+    @POST("admin/wifi/create")
+    Call<String> addListWifi(@Header("Authorization") String token, @Field("id_device") String id_device, @Field("name") String name, @Field("pass") String pass);
+
+    @FormUrlEncoded
+    @PUT("admin/wifi/update/{id_device}")
+    Call<String> updateListWifi(@Header("Authorization") String token, @Path("id_device") String id_device, @Field("name") String name, @Field("pass") String pass);
+
+    @FormUrlEncoded
+    @DELETE("admin/wifi/update/{id_device}")
+    Call<String> deleteListWifi(@Header("Authorization") String token, @Path("id_device") String id_device);
 
     @GET("airdata/get-list-by-user/{id}")
     Call<DataAir> getDataAir(@Header("Authorization") String token , @Header("time") String time , @Path("id") int id);

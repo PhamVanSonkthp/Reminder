@@ -18,7 +18,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/item_rcv_wifi_btn_update"
+            android:id="@+id/item_rcv_user_btn_schedule"
             android:layout_width="@dimen/_50ssp"
             android:layout_height="@dimen/_50ssp"
             android:padding="@dimen/_5ssp"
@@ -27,7 +27,25 @@
             android:src="@drawable/ic_baseline_schedule_24" />
 
         <ImageView
-            android:id="@+id/item_rcv_wifi_btn_delete"
+            android:id="@+id/item_rcv_user_btn_heart"
+            android:layout_width="@dimen/_50ssp"
+            android:layout_height="@dimen/_50ssp"
+            android:padding="@dimen/_5ssp"
+            android:layout_margin="@dimen/_5ssp"
+            android:background="@drawable/btn_back"
+            android:src="@drawable/ic_baseline_show_chart_24" />
+
+        <ImageView
+            android:id="@+id/item_rcv_user_btn_air"
+            android:layout_width="@dimen/_50ssp"
+            android:layout_height="@dimen/_50ssp"
+            android:padding="@dimen/_5ssp"
+            android:layout_margin="@dimen/_5ssp"
+            android:background="@drawable/btn_back"
+            android:src="@drawable/ic_baseline_air_24" />
+
+        <ImageView
+            android:id="@+id/item_rcv_user_btn_delete"
             android:layout_width="@dimen/_50ssp"
             android:layout_height="@dimen/_50ssp"
             android:padding="@dimen/_5ssp"
@@ -52,6 +70,14 @@
             android:padding="@dimen/_5ssp"
             android:paddingStart="@dimen/_40ssp">
 
+            <TextView
+                android:id="@+id/item_rcv_user_txt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,11 +86,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tên: "
+                    android:text="SĐT: "
                     android:textColor="@color/white" />
 
                 <TextView
-                    android:id="@+id/item_rcv_wifi_txt_name"
+                    android:id="@+id/item_rcv_user_txt_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white" />
@@ -79,61 +105,61 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mật khẩu: "
+                    android:text="Tuổi: "
                     android:textColor="@color/white" />
 
                 <TextView
-                    android:id="@+id/item_rcv_wifi_txt_password"
+                    android:id="@+id/item_rcv_user_txt_age"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white" />
 
             </LinearLayout>
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal">-->
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:orientation="horizontal">-->
 
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/ic_baseline_show_chart_24" />-->
+            <!--                <ImageView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:src="@drawable/ic_baseline_show_chart_24" />-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="@dimen/_5ssp"-->
-<!--                    android:text="76"-->
-<!--                    android:textColor="@color/white" />-->
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginLeft="@dimen/_5ssp"-->
+            <!--                    android:text="76"-->
+            <!--                    android:textColor="@color/white" />-->
 
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="@dimen/_5ssp"-->
-<!--                    android:src="@drawable/ic_baseline_air_24" />-->
+            <!--                <ImageView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginLeft="@dimen/_5ssp"-->
+            <!--                    android:src="@drawable/ic_baseline_air_24" />-->
 
-<!--&lt;!&ndash;                <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_marginLeft="@dimen/_5ssp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:text="98"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:textColor="@color/white" />&ndash;&gt;-->
+            <!--&lt;!&ndash;                <TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_marginLeft="@dimen/_5ssp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:text="98"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:textColor="@color/white" />&ndash;&gt;-->
 
-<!--&lt;!&ndash;                <ImageView&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_marginLeft="@dimen/_5ssp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:src="@drawable/ic_baseline_accessibility_24" />&ndash;&gt;-->
+            <!--&lt;!&ndash;                <ImageView&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_marginLeft="@dimen/_5ssp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:src="@drawable/ic_baseline_accessibility_24" />&ndash;&gt;-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="@dimen/_5ssp"-->
-<!--                    android:text="99"-->
-<!--                    android:textColor="@color/white" />-->
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginLeft="@dimen/_5ssp"-->
+            <!--                    android:text="99"-->
+            <!--                    android:textColor="@color/white" />-->
 
-<!--            </LinearLayout>-->
+            <!--            </LinearLayout>-->
         </LinearLayout>
 
         <ImageView
@@ -145,4 +171,3 @@
     </RelativeLayout>
 
 </com.daimajia.swipe.SwipeLayout>
-

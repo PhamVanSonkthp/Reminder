@@ -32,12 +32,12 @@
             android:textSize="@dimen/_11ssp" />
 
         <ImageView
-            android:onClick="addWifi"
-            android:src="@drawable/ic_baseline_add_24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:onClick="addWifi"
+            android:src="@drawable/ic_baseline_add_24"
             android:textColor="@color/green"
             android:textSize="@dimen/_11ssp" />
 

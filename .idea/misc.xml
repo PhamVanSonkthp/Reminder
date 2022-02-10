@@ -3,17 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/drawable/edit_back.xml" value="0.3078125" />
         <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/activity_doctor.xml" value="0.28717948717948716" />
-        <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/activity_list_device.xml" value="0.28717948717948716" />
         <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/activity_main.xml" value="0.2947916666666667" />
-        <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/activity_max30100_sensor.xml" value="0.28717948717948716" />
-        <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/activity_user.xml" value="0.28717948717948716" />
-        <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/activity_wifi.xml" value="0.2916666666666667" />
-        <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/ble_connect_activity.xml" value="0.2916666666666667" />
         <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/dialog_register.xml" value="0.28717948717948716" />
         <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/item_rcv_remind.xml" value="0.2947916666666667" />
-        <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/item_rcv_user.xml" value="0.28717948717948716" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/drawable/btn_back.xml" value="0.47239583333333335" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/drawable/btn_back_black.xml" value="0.4712820512820513" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/drawable/btn_back_primary.xml" value="0.4712820512820513" />
@@ -31,15 +24,20 @@
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/activity_max30100_sensor.xml" value="0.39479166666666665" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/activity_record.xml" value="0.45625" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/activity_user.xml" value="0.33177083333333335" />
+        <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/activity_wifi.xml" value="0.5083333333333333" />
+        <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/dialog_add_wifi.xml" value="0.5083333333333333" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/dialog_infor.xml" value="0.4625" />
+        <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/dialog_list_device_online.xml" value="0.5005128205128205" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/dialog_logout.xml" value="0.33177083333333335" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/dialog_my_qr_code.xml" value="0.44907407407407407" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/dialog_processing.xml" value="0.33177083333333335" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/dialog_register.xml" value="0.4625" />
+        <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/dialog_transfer_wifi.xml" value="0.5005128205128205" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/item_rcv_record_chat.xml" value="0.45625" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/item_rcv_remind.xml" value="0.42916666666666664" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/item_rcv_schedule.xml" value="0.33177083333333335" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/item_rcv_user.xml" value="0.45625" />
+        <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/item_rcv_wifi.xml" value="0.2859375" />
       </map>
     </option>
   </component>

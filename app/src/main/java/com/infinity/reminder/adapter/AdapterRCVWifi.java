@@ -1,26 +1,32 @@
 package com.infinity.reminder.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.infinity.reminder.R;
-import com.infinity.reminder.activity.AirSensorActivity;
-import com.infinity.reminder.activity.Max30100SensorActivity;
-import com.infinity.reminder.activity.ScheduleActivity;
-import com.infinity.reminder.model_objects.UserData;
-import com.infinity.reminder.model_objects.Wifi;
+import com.infinity.reminder.activity.LoginActivity;
+import com.infinity.reminder.activity.WifiActivity;
+import com.infinity.reminder.model_objects.DataListWifi;
 import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
 import com.infinity.reminder.storage.Storager;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -30,9 +36,9 @@ import retrofit2.Response;
 public class AdapterRCVWifi extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private Context context;
-    private ArrayList<Wifi.DataListWifi> arrItem;
+    private ArrayList<DataListWifi> arrItem;
 
-    public AdapterRCVWifi(Context context, ArrayList<Wifi.DataListWifi> arrItem) {
+    public AdapterRCVWifi(Context context, ArrayList<DataListWifi> arrItem) {
         this.context = context;
         this.arrItem = arrItem;
     }
@@ -40,7 +46,7 @@ public class AdapterRCVWifi extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_rcv_user, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_rcv_wifi, parent, false);
         return new Viewhodler(view);
     }
 
@@ -51,9 +57,49 @@ public class AdapterRCVWifi extends RecyclerView.Adapter<RecyclerView.ViewHolder
         viewhodler.txtPhone.setText(arrItem.get(holder.getAdapterPosition()).getPass());
 
         viewhodler.btnUpdate.setOnClickListener(v -> {
-//            Intent intent = new Intent(context , ScheduleActivity.class);
-//            intent.putExtra("id" , arrItem.get(holder.getAdapterPosition()).getId());
-//            context.startActivity(intent);
+            Dialog dialog = new Dialog(context);
+            dialog.setContentView(R.layout.dialog_transfer_wifi);
+
+            EditText edtName = dialog.findViewById(R.id.dialog_add_wifi_edt_name);
+            EditText edtPassword = dialog.findViewById(R.id.dialog_add_wifi_edt_password);
+            Button btnClose = dialog.findViewById(R.id.dialog_add_wifi_btn_close);
+            Button btnTransfer = dialog.findViewById(R.id.dialog_add_wifi_btn_add);
+
+            btnClose.setOnClickListener(view1 -> {
+                dialog.cancel();
+            });
+
+            btnTransfer.setOnClickListener(view1 -> {
+                DataClient dataClient = APIUtils.getData();
+                Call<String> callback = dataClient.updateListWifi("Bearer " + Storager.USER_APP.getAccess_token() , arrItem.get(holder.getAdapterPosition()).getId()+"" , edtName.getText().toString(), edtPassword.getText().toString());
+                callback.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                        if(response.code() == 200){
+                            dialog.cancel();
+                        }else if (response.code() == 403){
+                            FirebaseMessaging.getInstance().unsubscribeFromTopic("id-" + Storager.USER_APP.getUserData().getRole());
+                            File dir = context.getFilesDir();
+                            File file = new File(dir, Storager.FILE_INTERNAL);
+                            file.delete();
+
+                            Intent intent = new Intent(context , LoginActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            context.startActivity(intent);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                        Toast.makeText(context , t.getMessage() , Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
+
+            dialog.show();
+            Window window = dialog.getWindow();
+            window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         });
 
         viewhodler.btnDelete.setOnClickListener(v -> {
@@ -64,18 +110,29 @@ public class AdapterRCVWifi extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
 
             DataClient dataClient = APIUtils.getData();
-            Call<String> callback = dataClient.deleteUserByDoctor("Bearer " + Storager.USER_APP.getAccess_token() , arrItem.get(position).getId());
+            Call<String> callback = dataClient.deleteListWifi("Bearer " + Storager.USER_APP.getAccess_token() , arrItem.get(holder.getAdapterPosition()).getId()+"" );
             callback.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                    if (response.code() == 403){
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic("id-" + Storager.USER_APP.getUserData().getRole());
+                        File dir = context.getFilesDir();
+                        File file = new File(dir, Storager.FILE_INTERNAL);
+                        file.delete();
+
+                        Intent intent = new Intent(context , LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        context.startActivity(intent);
+                    }
 
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-
+                    Toast.makeText(context , t.getMessage() , Toast.LENGTH_SHORT).show();
                 }
             });
+
         });
     }
 
