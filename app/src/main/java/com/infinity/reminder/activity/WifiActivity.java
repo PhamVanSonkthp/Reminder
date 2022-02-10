@@ -84,7 +84,8 @@ public class WifiActivity extends AppCompatActivity {
         dialogProcessing.setContentView(R.layout.dialog_processing);
         dialogProcessing.setCancelable(false);
 
-        loadData();
+        //wifis.add(new Wifi.DataListWifi(1,"1"));
+        //loadData();
     }
 
     private void showDialogProcessing() {
