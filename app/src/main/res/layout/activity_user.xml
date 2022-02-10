@@ -304,7 +304,7 @@
                     android:layout_margin="@dimen/_10ssp"
                     android:layout_weight="1"
                     android:background="@drawable/btn_back"
-                    android:onClick="assistant"
+                    android:onClick="wifi"
                     android:orientation="vertical"
                     android:padding="@dimen/_5ssp">
 

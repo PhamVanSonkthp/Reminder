@@ -6,6 +6,7 @@ import com.infinity.reminder.model_objects.DataMax30100;
 import com.infinity.reminder.model_objects.DataRegister;
 import com.infinity.reminder.model_objects.DataSchedule;
 import com.infinity.reminder.model_objects.User;
+import com.infinity.reminder.model_objects.Wifi;
 
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
@@ -37,6 +38,9 @@ public interface DataClient {
 
     @GET("user/list-user-by-manager")
     Call<DataListUserByManager> getListUserByManager(@Header("Authorization") String token);
+
+    @GET("user/api/admin/wifi/get-wifi/{id_device}")
+    Call<Wifi> getListWifi(@Header("Authorization") String token, @Path("id_device") String id_device);
 
     @GET("airdata/get-list-by-user/{id}")
     Call<DataAir> getDataAir(@Header("Authorization") String token , @Header("time") String time , @Path("id") int id);

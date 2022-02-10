@@ -42,7 +42,6 @@ public class DoctorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor);
         addController();
-
     }
 
     private void loadData(){

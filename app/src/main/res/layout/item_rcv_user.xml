@@ -18,7 +18,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/item_rcv_user_btn_schedule"
+            android:id="@+id/item_rcv_wifi_btn_update"
             android:layout_width="@dimen/_50ssp"
             android:layout_height="@dimen/_50ssp"
             android:padding="@dimen/_5ssp"
@@ -27,25 +27,7 @@
             android:src="@drawable/ic_baseline_schedule_24" />
 
         <ImageView
-            android:id="@+id/item_rcv_user_btn_heart"
-            android:layout_width="@dimen/_50ssp"
-            android:layout_height="@dimen/_50ssp"
-            android:padding="@dimen/_5ssp"
-            android:layout_margin="@dimen/_5ssp"
-            android:background="@drawable/btn_back"
-            android:src="@drawable/ic_baseline_show_chart_24" />
-
-        <ImageView
-            android:id="@+id/item_rcv_user_btn_air"
-            android:layout_width="@dimen/_50ssp"
-            android:layout_height="@dimen/_50ssp"
-            android:padding="@dimen/_5ssp"
-            android:layout_margin="@dimen/_5ssp"
-            android:background="@drawable/btn_back"
-            android:src="@drawable/ic_baseline_air_24" />
-
-        <ImageView
-            android:id="@+id/item_rcv_user_btn_delete"
+            android:id="@+id/item_rcv_wifi_btn_delete"
             android:layout_width="@dimen/_50ssp"
             android:layout_height="@dimen/_50ssp"
             android:padding="@dimen/_5ssp"
@@ -70,14 +52,6 @@
             android:padding="@dimen/_5ssp"
             android:paddingStart="@dimen/_40ssp">
 
-            <TextView
-                android:id="@+id/item_rcv_user_txt_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12ssp"
-                android:textStyle="bold" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -86,11 +60,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SĐT: "
+                    android:text="Tên: "
                     android:textColor="@color/white" />
 
                 <TextView
-                    android:id="@+id/item_rcv_user_txt_phone"
+                    android:id="@+id/item_rcv_wifi_txt_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white" />
@@ -105,11 +79,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tuổi: "
+                    android:text="Mật khẩu: "
                     android:textColor="@color/white" />
 
                 <TextView
-                    android:id="@+id/item_rcv_user_txt_age"
+                    android:id="@+id/item_rcv_wifi_txt_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white" />

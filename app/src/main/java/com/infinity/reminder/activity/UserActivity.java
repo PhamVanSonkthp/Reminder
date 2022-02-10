@@ -118,7 +118,7 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void assistant(View view) {
-        promptSpeechInput();
+
     }
 
     private void promptSpeechInput() {
@@ -257,5 +257,9 @@ public class UserActivity extends AppCompatActivity {
 
     public void bleConnectClock(View view) {
         startActivity(new Intent(this , BLEConnectActivity.class));
+    }
+
+    public void wifi(View view) {
+        startActivity(new Intent(this , WifiActivity.class));
     }
 }
