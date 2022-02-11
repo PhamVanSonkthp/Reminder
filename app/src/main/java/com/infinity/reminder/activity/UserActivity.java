@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -234,21 +235,32 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void infor(View view) {
-//        Dialog dialog = new Dialog(this);
-//        dialog.setContentView(R.layout.dialog_infor);
-//
-//        TextView txtID = dialog.findViewById(R.id.dialog_infor_txt_id);
-//        TextView txtName = dialog.findViewById(R.id.dialog_infor_txt_name);
-//        dialog.findViewById(R.id.dialog_infor_txt_name_btn_close).setOnClickListener(v -> {
-//            dialog.cancel();
-//        });
-//
-//        txtID.setText(Storager.USER_APP.getUserData().getId() + "");
-//        txtName.setText(Storager.USER_APP.getUserData().getFullname());
-//
-//        dialog.show();
-//        Window window = dialog.getWindow();
-//        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_infor);
+
+        TextView txtID = dialog.findViewById(R.id.dialog_infor_txt_id);
+        TextView txtName = dialog.findViewById(R.id.dialog_infor_txt_name);
+        EditText edtIdDevice = dialog.findViewById(R.id.dialog_infor_edt_id_device);
+        EditText edtChannel = dialog.findViewById(R.id.dialog_infor_edt_channel);
+        Button btnSave = dialog.findViewById(R.id.dialog_infor_btn_save);
+
+        edtIdDevice.setText(Storager.USER_APP.getUserData().getDevice_code());
+        edtChannel.setText(Storager.USER_APP.getUserData().getChannel());
+
+        dialog.findViewById(R.id.dialog_infor_txt_name_btn_close).setOnClickListener(v -> {
+            dialog.cancel();
+        });
+
+        txtID.setText(Storager.USER_APP.getUserData().getId() + "");
+        txtName.setText(Storager.USER_APP.getUserData().getFullname());
+
+        btnSave.setOnClickListener(view1 -> {
+
+        });
+
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
     public void connectClock(View view) {

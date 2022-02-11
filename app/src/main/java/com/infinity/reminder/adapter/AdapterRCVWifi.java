@@ -73,7 +73,7 @@ public class AdapterRCVWifi extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             btnTransfer.setOnClickListener(view1 -> {
                 DataClient dataClient = APIUtils.getData();
-                Call<String> callback = dataClient.updateListWifi("Bearer " + Storager.USER_APP.getAccess_token() , arrItem.get(holder.getAdapterPosition()).getId()+"" , edtName.getText().toString(), edtPassword.getText().toString());
+                Call<String> callback = dataClient.updateListWifi("Bearer " + Storager.USER_APP.getAccess_token() , arrItem.get(holder.getAdapterPosition()).getId()+"" , edtName.getText().toString(), edtPassword.getText().toString(), arrItem.get(holder.getAdapterPosition()).getStatus());
                 callback.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
@@ -105,12 +105,6 @@ public class AdapterRCVWifi extends RecyclerView.Adapter<RecyclerView.ViewHolder
         });
 
         viewhodler.btnDelete.setOnClickListener(v -> {
-
-            if(arrItem.size() > 0 && holder.getAdapterPosition() < arrItem.size()){
-                arrItem.remove(holder.getAdapterPosition());
-                notifyDataSetChanged();
-            }
-
             DataClient dataClient = APIUtils.getData();
             Call<String> callback = dataClient.deleteListWifi("Bearer " + Storager.USER_APP.getAccess_token() , arrItem.get(holder.getAdapterPosition()).getId()+"" );
             callback.enqueue(new Callback<String>() {
@@ -134,8 +128,13 @@ public class AdapterRCVWifi extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     Toast.makeText(context , t.getMessage() , Toast.LENGTH_SHORT).show();
                 }
             });
-
+            if(arrItem.size() > 0 && holder.getAdapterPosition() < arrItem.size()){
+                arrItem.remove(holder.getAdapterPosition());
+                notifyDataSetChanged();
+            }
         });
+
+
     }
 
     @Override

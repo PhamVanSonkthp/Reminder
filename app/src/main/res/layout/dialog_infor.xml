@@ -44,4 +44,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <TextView
+        android:layout_marginTop="@dimen/_10ssp"
+        android:textSize="@dimen/_9ssp"
+        android:text="Mã thiết bị mẹ:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/dialog_infor_edt_id_device"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11ssp"
+        android:hint="Nhập mã thiết bị mẹ"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/_10ssp"
+        android:textSize="@dimen/_9ssp"
+        android:text="Kênh:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/dialog_infor_edt_channel"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11ssp"
+        android:hint="Kênh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dialog_infor_btn_save"
+        android:layout_marginTop="@dimen/_5ssp"
+        android:text="Lưu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>

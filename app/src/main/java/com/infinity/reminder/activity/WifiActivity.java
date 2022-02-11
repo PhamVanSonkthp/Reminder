@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,8 +52,7 @@ public class WifiActivity extends AppCompatActivity {
     private void loadData(){
         showDialogProcessing();
         DataClient dataClient = APIUtils.getData();
-        ///Call<Wifi> callback = dataClient.getListWifi("Bearer " + Storager.USER_APP.getAccess_token() , Storager.USER_APP.getUserData().getDevice_code());
-        Call<Wifi> callback = dataClient.getListWifi("Bearer " + Storager.USER_APP.getAccess_token() , 1 , 100 , 1+"");
+        Call<Wifi> callback = dataClient.getListWifi("Bearer " + Storager.USER_APP.getAccess_token() , 1 , 100 , Storager.USER_APP.getUserData().getDevice_code());
         callback.enqueue(new Callback<Wifi>() {
             @Override
             public void onResponse(@NonNull Call<Wifi> call, @NonNull Response<Wifi> response) {
@@ -120,11 +120,11 @@ public class WifiActivity extends AppCompatActivity {
 
     public void addWifi(View view) {
         Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_transfer_wifi);
+        dialog.setContentView(R.layout.dialog_add_wifi);
 
         EditText edtName = dialog.findViewById(R.id.dialog_add_wifi_edt_name);
         EditText edtPassword = dialog.findViewById(R.id.dialog_add_wifi_edt_password);
-        Button btnClose = dialog.findViewById(R.id.dialog_add_wifi_btn_close);
+        ImageButton btnClose = dialog.findViewById(R.id.dialog_add_wifi_btn_close);
         Button btnTransfer = dialog.findViewById(R.id.dialog_add_wifi_btn_add);
 
         btnClose.setOnClickListener(view1 -> {
@@ -138,9 +138,9 @@ public class WifiActivity extends AppCompatActivity {
             callback.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                    cancelDialogProcessing();
                     if(response.code() == 200){
                         loadData();
-                        cancelDialogProcessing();
                         dialog.cancel();
                     }else if (response.code() == 403){
                         FirebaseMessaging.getInstance().unsubscribeFromTopic("id-" + Storager.USER_APP.getUserData().getRole());

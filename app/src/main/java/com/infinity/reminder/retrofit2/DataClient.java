@@ -50,11 +50,10 @@ public interface DataClient {
 
     @FormUrlEncoded
     @PUT("admin/wifi/update/{id_device}")
-    Call<String> updateListWifi(@Header("Authorization") String token, @Path("id_device") String id_device, @Field("name") String name, @Field("pass") String pass);
+    Call<String> updateListWifi(@Header("Authorization") String token, @Path("id_device") String id_device, @Field("name") String name, @Field("pass") String pass, @Field("status") int status);
 
-    @FormUrlEncoded
-    @DELETE("admin/wifi/update/{id_device}")
-    Call<String> deleteListWifi(@Header("Authorization") String token, @Path("id_device") String id_device);
+    @DELETE("admin/wifi/get-wifi/{id}")
+    Call<String> deleteListWifi(@Header("Authorization") String token, @Path("id") String id);
 
     @GET("airdata/get-list-by-user/{id}")
     Call<DataAir> getDataAir(@Header("Authorization") String token , @Header("time") String time , @Path("id") int id);
