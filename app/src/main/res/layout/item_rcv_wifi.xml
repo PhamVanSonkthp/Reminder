@@ -23,8 +23,7 @@
             android:layout_height="@dimen/_50ssp"
             android:padding="@dimen/_5ssp"
             android:layout_margin="@dimen/_5ssp"
-            android:background="@drawable/btn_back"
-            android:src="@drawable/ic_baseline_schedule_24" />
+            android:src="@drawable/ic_baseline_edit_24" />
 
         <ImageView
             android:id="@+id/item_rcv_wifi_btn_delete"

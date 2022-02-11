@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -50,7 +51,8 @@ public class WifiActivity extends AppCompatActivity {
     private void loadData(){
         showDialogProcessing();
         DataClient dataClient = APIUtils.getData();
-        Call<Wifi> callback = dataClient.getListWifi("Bearer " + Storager.USER_APP.getAccess_token() , Storager.USER_APP.getUserData().getDevice_code());
+        ///Call<Wifi> callback = dataClient.getListWifi("Bearer " + Storager.USER_APP.getAccess_token() , Storager.USER_APP.getUserData().getDevice_code());
+        Call<Wifi> callback = dataClient.getListWifi("Bearer " + Storager.USER_APP.getAccess_token() , 1 , 100 , 1+"");
         callback.enqueue(new Callback<Wifi>() {
             @Override
             public void onResponse(@NonNull Call<Wifi> call, @NonNull Response<Wifi> response) {
@@ -68,6 +70,8 @@ public class WifiActivity extends AppCompatActivity {
                     Intent intent = new Intent(WifiActivity.this , LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
+                }else{
+                    cancelDialogProcessing();
                 }
 
             }
@@ -81,7 +85,7 @@ public class WifiActivity extends AppCompatActivity {
     }
 
     private void addController() {
-        rcvWifi = findViewById(R.id.rcv_user);
+        rcvWifi = findViewById(R.id.rcv_wifi);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcvWifi.setLayoutManager(linearLayoutManager);
         rcvWifi.setNestedScrollingEnabled(false);

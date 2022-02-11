@@ -3,12 +3,14 @@ package com.infinity.reminder.adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -58,11 +60,11 @@ public class AdapterRCVWifi extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         viewhodler.btnUpdate.setOnClickListener(v -> {
             Dialog dialog = new Dialog(context);
-            dialog.setContentView(R.layout.dialog_transfer_wifi);
+            dialog.setContentView(R.layout.dialog_add_wifi);
 
             EditText edtName = dialog.findViewById(R.id.dialog_add_wifi_edt_name);
             EditText edtPassword = dialog.findViewById(R.id.dialog_add_wifi_edt_password);
-            Button btnClose = dialog.findViewById(R.id.dialog_add_wifi_btn_close);
+            ImageButton btnClose = dialog.findViewById(R.id.dialog_add_wifi_btn_close);
             Button btnTransfer = dialog.findViewById(R.id.dialog_add_wifi_btn_add);
 
             btnClose.setOnClickListener(view1 -> {

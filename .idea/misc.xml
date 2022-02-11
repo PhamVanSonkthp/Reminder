@@ -5,8 +5,12 @@
       <map>
         <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/activity_doctor.xml" value="0.28717948717948716" />
         <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/activity_main.xml" value="0.2947916666666667" />
+        <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/activity_wifi.xml" value="0.1609375" />
+        <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/dialog_add_wifi.xml" value="0.2125" />
         <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/dialog_register.xml" value="0.28717948717948716" />
+        <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/dialog_transfer_wifi.xml" value="0.2125" />
         <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/item_rcv_remind.xml" value="0.2947916666666667" />
+        <entry key="..\:/Users/bontu/Documents/ProjectAndroid/Reminder/app/src/main/res/layout/item_rcv_wifi.xml" value="0.2125" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/drawable/btn_back.xml" value="0.47239583333333335" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/drawable/btn_back_black.xml" value="0.4712820512820513" />
         <entry key="..\:/Users/pc-son/Documents/ProjectAndroid/Reminder/app/src/main/res/drawable/btn_back_primary.xml" value="0.4712820512820513" />

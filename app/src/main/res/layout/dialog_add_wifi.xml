@@ -47,8 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_back_black"
-        android:inputType="number"
-        android:hint="Số điện thoại"
+        android:hint="Mật khẩu"
         android:padding="@dimen/_10ssp"
         android:imeOptions="actionNext"
         android:textColor="@color/black"
@@ -63,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_back_primary"
-        android:text="Thêm"
+        android:text="Xác nhận"
         android:textColor="@color/white" />
 
 </LinearLayout>

@@ -42,7 +42,7 @@ public interface DataClient {
     Call<DataListUserByManager> getListUserByManager(@Header("Authorization") String token);
 
     @GET("admin/wifi/get-wifi/{id_device}")
-    Call<Wifi> getListWifi(@Header("Authorization") String token, @Path("id_device") String id_device);
+    Call<Wifi> getListWifi(@Header("Authorization") String token,@Header("pageIndex") int pageIndex,@Header("pageSize") int pageSize, @Path("id_device") String id_device);
 
     @FormUrlEncoded
     @POST("admin/wifi/create")
