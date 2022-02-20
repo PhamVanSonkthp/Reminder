@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,6 +22,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.infinity.reminder.R;
 import com.infinity.reminder.helper.Protecter;
 import com.infinity.reminder.model_objects.DataAir;
+import com.infinity.reminder.model_objects.DataListAir;
 import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
 import com.infinity.reminder.storage.Storager;
@@ -73,7 +73,7 @@ public class AirSensorActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<DataAir> call, @NonNull Response<DataAir> response) {
                 if(response.code() == 200){
 
-                    List<DataAir.DataListAir> dataListAirs = response.body().getData().getData();
+                    List<DataListAir> dataListAirs = response.body().getData().getData();
 
                     lineChart.setData(generateDataLine(response.body().getData().getData() ));
                     lineChart.notifyDataSetChanged();
@@ -190,7 +190,7 @@ public class AirSensorActivity extends AppCompatActivity {
 
     }
 
-    private LineData generateDataLine(List<DataAir.DataListAir> dataListAirs) {
+    private LineData generateDataLine(List<DataListAir> dataListAirs) {
         ArrayList<Entry> values1 = new ArrayList<>();
 
         for (int i = 0; i < dataListAirs.size(); i++) {

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -21,6 +22,8 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.infinity.reminder.R;
 import com.infinity.reminder.helper.Protecter;
+import com.infinity.reminder.model_objects.DataListAir;
+import com.infinity.reminder.model_objects.DataListMax30100;
 import com.infinity.reminder.model_objects.DataMax30100;
 import com.infinity.reminder.retrofit2.APIUtils;
 import com.infinity.reminder.retrofit2.DataClient;
@@ -72,11 +75,21 @@ public class Max30100SensorActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<DataMax30100> call, @NonNull Response<DataMax30100> response) {
                 if(response.code() == 200){
-                    lineChart.setData(generateDataLine(response.body().getData().getData() ));
+                    //lineChart.setData(generateDataLine(response.body().getData().getData() ));
+
+                    List<DataListMax30100> dataListMax30100s
+                             = new ArrayList<>();
+                    dataListMax30100s.add(new DataListMax30100(1,1,15,10,10,"",""));
+                    dataListMax30100s.add(new DataListMax30100(1,1,88,46,35,"",""));
+                    dataListMax30100s.add(new DataListMax30100(1,1,46,46,86,"",""));
+
+
+
+                    lineChart.setData(generateDataLine(dataListMax30100s));
                     lineChart.notifyDataSetChanged();
                     lineChart.invalidate();
 
-                    List<DataMax30100.DataListMax30100> dataListAirs = response.body().getData().getData();
+                    List<DataListMax30100> dataListAirs = response.body().getData().getData();
                     float minBMP = 0 , maxBMP = 0, totalBMP = 0,
                             minSPO2 = 0 , maxSPO2 = 0, totalSPO2 = 0,
                             minIR = 0 , maxIR = 0, totalIR = 0;
@@ -207,7 +220,7 @@ public class Max30100SensorActivity extends AppCompatActivity {
 
     }
 
-    private LineData generateDataLine(List<DataMax30100.DataListMax30100> dataListAirs) {
+    private LineData generateDataLine(List<DataListMax30100> dataListAirs) {
         ArrayList<Entry> values1 = new ArrayList<>();
 
         for (int i = 0; i < dataListAirs.size(); i++) {
@@ -246,7 +259,7 @@ public class Max30100SensorActivity extends AppCompatActivity {
             values3.add(new Entry(i, (float)(dataListAirs.get(i).getIr())));
         }
 
-        LineDataSet d3 = new LineDataSet(values2, "IR");
+        LineDataSet d3 = new LineDataSet(values3, "IR");
         d3.setLineWidth(1f);
         d3.setColor(getResources().getColor(R.color.yellow));
         d3.setDrawValues(false);
@@ -254,6 +267,24 @@ public class Max30100SensorActivity extends AppCompatActivity {
         d3.setDrawCircleHole(false);
 
         sets.add(d3);
+        YAxis leftAxis = lineChart.getAxisLeft();
+        leftAxis.removeAllLimitLines();
+        if (Storager.USER_APP.getUserData().getBpm_limit() != null){
+            LimitLine ll1 = new LimitLine(Float.parseFloat(Storager.USER_APP.getUserData().getBpm_limit()), "BPM Limit");
+            ll1.setLineWidth(4f);
+            ll1.enableDashedLine(10f, 10f, 0f);
+            ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+            ll1.setTextSize(10f);
+            leftAxis.addLimitLine(ll1);
+        }
+        if (Storager.USER_APP.getUserData().getIr_limit() != null){
+            LimitLine ll1 = new LimitLine(Float.parseFloat(Storager.USER_APP.getUserData().getIr_limit()), "Ir Limit");
+            ll1.setLineWidth(4f);
+            ll1.enableDashedLine(10f, 10f, 0f);
+            ll1.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
+            ll1.setTextSize(10f);
+            leftAxis.addLimitLine(ll1);
+        }
 
         return new LineData(sets);
     }
