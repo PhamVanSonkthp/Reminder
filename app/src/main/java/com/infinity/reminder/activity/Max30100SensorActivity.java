@@ -75,17 +75,17 @@ public class Max30100SensorActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<DataMax30100> call, @NonNull Response<DataMax30100> response) {
                 if(response.code() == 200){
-                    //lineChart.setData(generateDataLine(response.body().getData().getData() ));
+                    lineChart.setData(generateDataLine(response.body().getData().getData() ));
 
-                    List<DataListMax30100> dataListMax30100s
-                             = new ArrayList<>();
-                    dataListMax30100s.add(new DataListMax30100(1,1,15,10,10,"",""));
-                    dataListMax30100s.add(new DataListMax30100(1,1,88,46,35,"",""));
-                    dataListMax30100s.add(new DataListMax30100(1,1,46,46,86,"",""));
-
-
-
-                    lineChart.setData(generateDataLine(dataListMax30100s));
+//                    List<DataListMax30100> dataListMax30100s
+//                             = new ArrayList<>();
+//                    dataListMax30100s.add(new DataListMax30100(1,1,15,10,10,"",""));
+//                    dataListMax30100s.add(new DataListMax30100(1,1,88,46,35,"",""));
+//                    dataListMax30100s.add(new DataListMax30100(1,1,46,46,86,"",""));
+//
+//
+//
+//                    lineChart.setData(generateDataLine(dataListMax30100s));
                     lineChart.notifyDataSetChanged();
                     lineChart.invalidate();
 
