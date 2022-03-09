@@ -67,6 +67,9 @@
             android:name=".activity.ScheduleActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.AlertActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.AirSensorActivity"
             android:exported="true" />
         <activity
