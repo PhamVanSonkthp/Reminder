@@ -5,6 +5,7 @@ import com.infinity.reminder.model_objects.DataListUserByManager;
 import com.infinity.reminder.model_objects.DataMax30100;
 import com.infinity.reminder.model_objects.DataRegister;
 import com.infinity.reminder.model_objects.DataSchedule;
+import com.infinity.reminder.model_objects.Max30100Request;
 import com.infinity.reminder.model_objects.User;
 import com.infinity.reminder.model_objects.Wifi;
 

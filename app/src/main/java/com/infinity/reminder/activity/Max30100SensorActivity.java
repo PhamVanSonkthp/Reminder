@@ -6,9 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -32,6 +38,7 @@ import com.infinity.reminder.storage.Storager;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -51,13 +58,31 @@ public class Max30100SensorActivity extends AppCompatActivity {
     TextView txtSPO2Min , txtSPO2Max , txtSPO2Medium;
     TextView txtIRMin , txtIRMax , txtIRMedium;
 
+    ImageView imgRing;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_max30100_sensor);
         addController();
         addEvents();
-        getData();
+
+        final Handler h = new Handler();
+        h.postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                getData();
+                h.postDelayed(this, 5000);
+                scaleView();
+            }
+        }, 0);
+    }
+
+    private void scaleView() {
+        Animation scaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_up);
+        imgRing.startAnimation(scaleDown);
     }
 
     private void addEvents() {
@@ -168,6 +193,8 @@ public class Max30100SensorActivity extends AppCompatActivity {
 
     private void addController() {
 
+        imgRing = findViewById(R.id.ivNotification);
+
         txtBMPMin = findViewById(R.id.txt_bmp_min);
         txtBMPMax = findViewById(R.id.txt_bmp_max);
         txtBMPMedium = findViewById(R.id.txt_bmp_medium);
@@ -221,6 +248,11 @@ public class Max30100SensorActivity extends AppCompatActivity {
     }
 
     private LineData generateDataLine(List<DataListMax30100> dataListAirs) {
+
+        while (dataListAirs.size() > 60){
+            dataListAirs.remove(dataListAirs.size()-1);
+        }
+
         ArrayList<Entry> values1 = new ArrayList<>();
 
         for (int i = 0; i < dataListAirs.size(); i++) {
